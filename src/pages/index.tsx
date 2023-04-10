@@ -3,9 +3,22 @@ import axios from "axios";
 import { Field, Form, Formik, FormikConfig, FormikValues } from "formik";
 import { CheckboxWithLabel, TextField, RadioGroup } from "formik-material-ui";
 import React, { useState } from "react";
+import { withStyles } from "@material-ui/core/styles";
 import { object, string } from "yup";
 // import { logo } from "../../src/assets/img/form-logo.png";
-
+const StyledTextField = withStyles({
+  root: {
+    "& label": {
+      transformOrigin: "top right",
+      right: 30,
+      left: "auto",
+      textAlign: "right",
+    },
+    "& legend": {
+      textAlign: "right",
+    },
+  },
+})(TextField);
 export default function Home() {
   const sleep = (time: any) => new Promise((acc) => setTimeout(acc, time));
 
@@ -147,7 +160,7 @@ export default function Home() {
                     fullWidth
                     name='FirstName'
                     variant='outlined'
-                    component={TextField}
+                    component={StyledTextField}
                     label='نام'
                   />
                 </div>
@@ -156,7 +169,7 @@ export default function Home() {
                     fullWidth
                     name='LastName'
                     variant='outlined'
-                    component={TextField}
+                    component={StyledTextField}
                     label='نام خانوادگی'
                   />
                 </div>
@@ -167,7 +180,7 @@ export default function Home() {
                     fullWidth
                     name='PhoneNumber'
                     variant='outlined'
-                    component={TextField}
+                    component={StyledTextField}
                     label='شماره موبایل'
                   />
                 </div>
@@ -176,7 +189,7 @@ export default function Home() {
                     fullWidth
                     name='NationalCode'
                     variant='outlined'
-                    component={TextField}
+                    component={StyledTextField}
                     label='کد ملی'
                   />
                 </div>
@@ -187,16 +200,16 @@ export default function Home() {
                     fullWidth
                     name='PostalCode'
                     variant='outlined'
-                    component={TextField}
+                    component={StyledTextField}
                     label='کد پستی'
                   />
                 </div>
-                <div className='input mr'>
+                <div className='input mr' dir='rtl'>
                   <Field
                     fullWidth
                     name='Email'
                     variant='outlined'
-                    component={TextField}
+                    component={StyledTextField}
                     label='آدرس ایمیل'
                   />
                 </div>
@@ -207,16 +220,17 @@ export default function Home() {
                     fullWidth
                     name='Address'
                     variant='outlined'
-                    component={TextField}
+                    component={StyledTextField}
                     label='آدرس'
                   />
                 </div>
                 <div className='input mr'>
                   <Field
+                    direction='rtl'
                     fullWidth
                     name='BankName'
                     variant='outlined'
-                    component={TextField}
+                    component={StyledTextField}
                     label='نام بانک'
                   />
                 </div>
@@ -227,7 +241,7 @@ export default function Home() {
                     fullWidth
                     name='Sheba'
                     variant='outlined'
-                    component={TextField}
+                    component={StyledTextField}
                     label='شماره شبا بانکی (حساب بایدبه نام طرف قرارداد باشد)'
                   />
                 </div>
@@ -249,7 +263,7 @@ export default function Home() {
                 fullWidth
                 name='money'
                 type='number'
-                component={TextField}
+                component={StyledTextField}
                 label='All the money I have'
               />
               <div role='group' aria-labelledby='my-radio-group'>
@@ -273,7 +287,7 @@ export default function Home() {
                 variant='outlined'
                 fullWidth
                 name='description'
-                component={TextField}
+                component={StyledTextField}
                 label='Description'
               />
             </FormikStep>
