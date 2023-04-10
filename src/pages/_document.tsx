@@ -5,11 +5,11 @@ import React from "react";
 export default class MyDocument extends Document {
   render() {
     return (
-      <Html lang="en">
+      <Html lang='en' dir='rtl'>
         <Head>
           <meta
-            name="viewport"
-            content="minimum-scale=1, initial-scale=1, width=device-width"
+            name='viewport'
+            content='minimum-scale=1, initial-scale=1, width=device-width'
           />
         </Head>
         <body>
