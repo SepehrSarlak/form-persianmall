@@ -103,8 +103,42 @@ export default function Home() {
             <FormikStep
               label='Personal Data'
               validationSchema={object({
-                FirstName: string().required("FirstName").max(10),
-                LastName: string().required("LastName").min(3).max(10),
+                FirstName: string().required(" نام را به درستی وارد کنید"),
+                LastName: string().required(
+                  " نام خانوادگی را به درستی وارد کنید"
+                ),
+                NationalCode: string()
+                  .max(11, "کد ملی را به درستی وارد کنید")
+                  .required("کد ملی را به درستی وارد کنید")
+                  .matches(
+                    /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/,
+                    "کد ملی را به درستی وارد کنید"
+                  ),
+                PhoneNumber: string()
+                  .max(11, "شماره تماس را به درستی وارد کنید")
+                  .required("شماره تماس را به درستی وارد کنید")
+                  .matches(
+                    /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/,
+                    "شماره تماس را به درستی وارد کنید"
+                  ),
+                PostalCode: string()
+                  .max(10, "کد پستی را به درستی وارد کنید")
+                  .required("کد پستی را به درستی وارد کنید")
+                  .matches(
+                    /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/,
+                    "کد پستی را به درستی وارد کنید"
+                  ),
+                Address: string().required("آدرس را به درستی وارد کنید"),
+                Email: string()
+                  .email("آدرس ایمیل را به درستی وارد کنید")
+                  .required("آدرس ایمیل را به درستی وارد کنید"),
+                BankName: string().required("نام بانک را به درستی وارد کنید"),
+                Sheba: string()
+                  .required("شماره شبا را به درستی وارد کنید")
+                  .matches(
+                    /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/,
+                    "شماره شبا را به درستی وارد کنید"
+                  ),
               })}
             >
               <div className='row-input'>
@@ -123,7 +157,7 @@ export default function Home() {
                     name='LastName'
                     variant='outlined'
                     component={TextField}
-                    label='نام خانوادگی*'
+                    label='نام خانوادگی'
                   />
                 </div>
               </div>
@@ -131,19 +165,19 @@ export default function Home() {
                 <div className='input'>
                   <Field
                     fullWidth
-                    name='LastName'
+                    name='PhoneNumber'
                     variant='outlined'
                     component={TextField}
-                    label='شماره موبایل*'
+                    label='شماره موبایل'
                   />
                 </div>
                 <div className='input mr'>
                   <Field
                     fullWidth
-                    name='LastName'
+                    name='NationalCode'
                     variant='outlined'
                     component={TextField}
-                    label='کد ملی *'
+                    label='کد ملی'
                   />
                 </div>
               </div>
@@ -151,16 +185,16 @@ export default function Home() {
                 <div className='input'>
                   <Field
                     fullWidth
-                    name='LastName'
+                    name='PostalCode'
                     variant='outlined'
                     component={TextField}
-                    label='کد پستی *'
+                    label='کد پستی'
                   />
                 </div>
                 <div className='input mr'>
                   <Field
                     fullWidth
-                    name='LastName'
+                    name='Email'
                     variant='outlined'
                     component={TextField}
                     label='آدرس ایمیل'
@@ -171,16 +205,16 @@ export default function Home() {
                 <div className='input'>
                   <Field
                     fullWidth
-                    name='LastName'
+                    name='Address'
                     variant='outlined'
                     component={TextField}
-                    label='آدرس*'
+                    label='آدرس'
                   />
                 </div>
                 <div className='input mr'>
                   <Field
                     fullWidth
-                    name='LastName'
+                    name='BankName'
                     variant='outlined'
                     component={TextField}
                     label='نام بانک'
@@ -191,7 +225,7 @@ export default function Home() {
                 <div className='input'>
                   <Field
                     fullWidth
-                    name='LastName'
+                    name='Sheba'
                     variant='outlined'
                     component={TextField}
                     label='شماره شبا بانکی (حساب بایدبه نام طرف قرارداد باشد)'
