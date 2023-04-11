@@ -1,4 +1,4 @@
-import { Box, Button, CircularProgress, Grid } from "@material-ui/core";
+import { Box, Button, CircularProgress, Grid, InputAdornment } from "@material-ui/core";
 import axios from "axios";
 import { Field, Form, Formik, FormikConfig, FormikValues } from "formik";
 import { CheckboxWithLabel, TextField, RadioGroup } from "formik-material-ui";
@@ -6,6 +6,10 @@ import React, { useState } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { boolean, object, string } from "yup";
 // import { logo } from "../../src/assets/img/form-logo.png";
+import * as Yup from 'yup';
+
+
+
 const StyledTextField = withStyles({
   root: {
     "& label": {
@@ -13,6 +17,7 @@ const StyledTextField = withStyles({
       right: 30,
       left: "auto",
       textAlign: "right",
+      minWidth: "150px"
     },
     "& legend": {
       textAlign: "right",
@@ -92,6 +97,50 @@ export default function Home() {
     PaymentTrackingCode: "",
   };
 
+  const validationSchema = Yup.object().shape({
+
+      FirstName: Yup.string().required(" نام را به درستی وارد کنید"),
+      LastName: Yup.string().required(
+        " نام خانوادگی را به درستی وارد کنید"
+      ),
+      NationalCode: Yup.string()
+        .max(11, "کد ملی را به درستی وارد کنید")
+        .required("کد ملی را به درستی وارد کنید")
+        .matches(
+          /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/,
+          "کد ملی را به درستی وارد کنید"
+        ),
+      PhoneNumber: Yup.string()
+        .max(11, "شماره تماس را به درستی وارد کنید")
+        .required("شماره تماس را به درستی وارد کنید")
+        .matches(
+          /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/,
+          "شماره تماس را به درستی وارد کنید"
+        ),
+      PostalCode: Yup.string()
+        .max(10, "کد پستی را به درستی وارد کنید")
+        .required("کد پستی را به درستی وارد کنید")
+        .matches(
+          /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/,
+          "کد پستی را به درستی وارد کنید"
+        ),
+      Address: Yup.string().required("آدرس را به درستی وارد کنید"),
+      Email: Yup.string()
+        .email("آدرس ایمیل را به درستی وارد کنید")
+        .required("آدرس ایمیل را به درستی وارد کنید")
+        .matches(
+          /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+        ),
+      BankName: Yup.string().required("نام بانک را به درستی وارد کنید"),
+      Sheba: Yup.string()
+        .required("شماره شبا را به درستی وارد کنید")
+        .matches(
+          /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/,
+          "شماره شبا را به درستی وارد کنید"
+        ),
+        image: Yup.mixed().required('Image is required'),
+  });
+
   const handleSubmit = async (values: ContactFormData) => {
     console.log("values", values);
     try {
@@ -161,6 +210,7 @@ export default function Home() {
               //       "شماره شبا را به درستی وارد کنید"
               //     ),
               // })}
+              validationSchema={validationSchema}
             >
               <div className='title-right-side'>
                 <span>مرحله 1 از 3</span>
@@ -194,6 +244,7 @@ export default function Home() {
                     variant='outlined'
                     component={StyledTextField}
                     label='شماره موبایل'
+                    className="input-left"
                   />
                 </div>
 
@@ -204,6 +255,7 @@ export default function Home() {
                     variant='outlined'
                     component={StyledTextField}
                     label='کد ملی'
+                    className="input-left"
                   />
                 </div>
               </div>
@@ -215,6 +267,7 @@ export default function Home() {
                     variant='outlined'
                     component={StyledTextField}
                     label='کد پستی'
+                    className="input-left"
                   />
                 </div>
                 <div className='input mr' dir='rtl'>
@@ -222,6 +275,7 @@ export default function Home() {
                     fullWidth
                     name='Email'
                     variant='outlined'
+                    className="input-left"
                     component={StyledTextField}
                     label='آدرس ایمیل'
                   />
@@ -248,17 +302,24 @@ export default function Home() {
                   />
                 </div>
               </div>
+             <div className="special-input">
               <div className='row-input'>
                 <div className='input'>
                   <Field
+                  label="شماره شبا بانکی"
+                  className="input-left"
+                    helperText="حساب باید به نام طرف قرارداد باشد"
                     fullWidth
+                    InputProps={{
+                      endAdornment: <InputAdornment position="end">IR</InputAdornment>,
+                    }}
                     name='Sheba'
                     variant='outlined'
                     component={StyledTextField}
-                    label='شماره شبا بانکی (حساب بایدبه نام طرف قرارداد باشد)'
                   />
                 </div>
               </div>
+             </div>
             </FormikStep>
             <FormikStep
               label='Bank Accounts'
@@ -406,6 +467,7 @@ export default function Home() {
                 component={StyledTextField}
                 label='Description'
               />
+              
             </FormikStep>
             <FormikStep label='test'></FormikStep>
           </FormikStepper>
@@ -416,7 +478,7 @@ export default function Home() {
             به صورت رایگان (بدون کارمزد) ارائه می نماید. هم اکنون بیش از 15,000
             فروشگاه از سراسر ایران در حال فعالیت در پاساژ می باشند.
           </span>
-          <div className='logo'>{/* <img src={logo} alt='' /> */}</div>
+          <div className='logo'></div>
         </div>
       </div>
     </div>
