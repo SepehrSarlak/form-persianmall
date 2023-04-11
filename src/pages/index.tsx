@@ -11,8 +11,24 @@ import { CheckboxWithLabel, TextField, RadioGroup } from "formik-material-ui";
 import React, { useState } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { boolean, object, string } from "yup";
-// import { logo } from "../../src/assets/img/form-logo.png";
+
 import * as Yup from "yup";
+
+// const validationFile = Yup.object().shape({
+//   // NationalCardPicture: Yup.mixed()
+//   //   .required("Please select a file")
+//   //   .test("fileSize", "File size too large", (value) => {
+//   //     return value && value.size <= 5000000; // 5MB
+//   //   })
+//   //   .test("fileType", "Unsupported file type", (value) => {
+//   //     return value && ["image/jpeg", "image/png"].includes(value.type);
+//   //   }),
+// });
+const formValidateFile = Yup.object().shape({
+  NationalCardPicture: Yup.mixed().required("asfd"),
+  BirthCertificatePicture: Yup.mixed().required("asfd"),
+  // image: Yup.mixed().required(),
+});
 
 const StyledTextField = withStyles({
   root: {
@@ -64,6 +80,8 @@ export default function Home() {
     AutoSelectedSaleBranch: boolean;
     IsPaymentDone: boolean;
     PaymentTrackingCode: string;
+    NationalCardPicture: string;
+    BirthCertificatePicture: string;
   }
 
   const initialValues: ContactFormData = {
@@ -99,6 +117,8 @@ export default function Home() {
     AutoSelectedSaleBranch: false,
     IsPaymentDone: false,
     PaymentTrackingCode: "",
+    NationalCardPicture: "",
+    BirthCertificatePicture: "",
   };
 
   const phoneRegExp =
@@ -154,18 +174,6 @@ export default function Home() {
     }
   };
 
-  const checkValue = (value) => {
-    // useState(() => {}, []);
-
-    if (value && typeof value === "string") {
-      if (value.toLowerCase() === "true") return true;
-      if (value.toLowerCase() === "false") return false;
-    }
-
-    return value;
-  };
-  // boolString.toLowerCase() === "true"
-
   return (
     <div className='container'>
       <div className='container-form'>
@@ -174,7 +182,6 @@ export default function Home() {
             <FormikStep
               label='Personal Data'
               validationSchema={validationSchema}
-              // validationSchema={validationSchema}
             >
               <div className='title-right-side'>
                 <span>مرحله 1 از 3</span>
@@ -208,10 +215,8 @@ export default function Home() {
                     variant='outlined'
                     component={StyledTextField}
                     label='شماره موبایل'
-                    className='input-left'
                   />
                 </div>
-
                 <div className='input mr'>
                   <Field
                     fullWidth
@@ -287,6 +292,7 @@ export default function Home() {
                 </div>
               </div>
             </FormikStep>
+
             <FormikStep
               label='Bank Accounts'
               validationSchema={validationSchema}
@@ -416,14 +422,24 @@ export default function Home() {
                 </div>
               </div>
             </FormikStep>
-            <FormikStep label='Bank Accounts'>
-              <Field
-                variant='outlined'
-                fullWidth
-                name='description'
-                component={StyledTextField}
-                label='Description'
-              />
+            <FormikStep label='Bank Accounts' validationSchema={formValidateFile}>
+              <div className='title-right-side'>
+                <span>مرحله 3 از 3</span>
+                <span className='title'>اطلاعات شخصی</span>
+              </div>
+              <div className='file-parent'>
+                <Field
+                  type='file'
+                  name='NationalCardPicture'
+                  accept='image/*'
+                />
+                <Field
+                  type='file'
+                  name='BirthCertificatePicture'
+                  accept='image/*'
+                  label='sadf'
+                />
+              </div>
             </FormikStep>
             <FormikStep label='test'></FormikStep>
           </FormikStepper>
@@ -440,7 +456,6 @@ export default function Home() {
     </div>
   );
 }
-
 export interface FormikStepProps
   extends Pick<FormikConfig<FormikValues>, "children" | "validationSchema"> {
   label: string;

@@ -1,30 +1,26 @@
-
 @font-face {
-  font-family: 'MyFont';
-  src: url('./../fonts/yekanbakh/YekanBakhFaLight.woff') format('woff');
+  font-family: "MyFont";
+  src: url("./../fonts/yekanbakh/YekanBakhFaLight.woff") format("woff");
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'MyFont';
-  src: url('./../fonts/yekanbakh/YekanBakhFaMedium.woff') format('woff');
+  font-family: "MyFont";
+  src: url("./../fonts/yekanbakh/YekanBakhFaMedium.woff") format("woff");
   font-weight: 500;
   font-style: medium;
 }
 
-
 @font-face {
-  font-family: 'MyFont';
-  src: url('./../fonts/yekanbakh/YekanBakhFaBold.woff') format('woff');
+  font-family: "MyFont";
+  src: url("./../fonts/yekanbakh/YekanBakhFaBold.woff") format("woff");
   font-weight: 700;
   font-style: bold;
 }
 
-
-
 body {
-  font-family: 'MyFont', sans-serif;
+  font-family: "MyFont", sans-serif;
 }
 
 body {
@@ -48,9 +44,11 @@ body {
     font-size: 14px !important;
 }
 
-.MuiFormLabel-root , .MuiFormHelperText-root , .MuiButton-root {
-  font-family: 'MyFont', sans-serif !important;
 
+.MuiFormLabel-root,
+.MuiFormHelperText-root,
+.MuiButton-root {
+  font-family: "MyFont", sans-serif !important;
 }
 .container {
   width: 100%;
@@ -83,8 +81,6 @@ body {
   padding: 0 1rem;
 }
 
-
-
 .container-form .form-right-side > form {
   margin: 0 1.5rem;
   display: flex;
@@ -95,7 +91,6 @@ body {
 .container-form .form-right-side > form input {
   border-radius: 0.7rem !important;
   border-color: #8692a6;
-  
 }
 
 .container-form .form-left-side {
@@ -105,7 +100,7 @@ body {
   background-position: center;
 }
 .container-form .form-left-side span {
-  font-weight: 500
+  font-weight: 500;
 }
 
 .row-input {
@@ -126,12 +121,10 @@ body {
 
 .row-input .input {
   position: relative;
-
 }
 
-.row-input .input input{
+.row-input .input input {
   border-radius: 2rem !important;
-
 }
 .row-input
   .input
@@ -159,7 +152,7 @@ body {
   font-size: 16px;
   color: #8f8f8f;
   padding-top: 0.6rem;
-  font-weight: 500
+  font-weight: 500;
 }
 .input-radio {
   display: flex;
@@ -214,17 +207,36 @@ input[type="radio"] {
   padding-top: 0.5rem;
 }
 .MuiOutlinedInput-root {
-  border-radius: 8px !important
+  border-radius: 8px !important;
 }
 
 .MuiOutlinedInput-adornedEnd {
-  padding-left: 14px
+  padding-left: 14px;
 }
 
 .special-input {
   min-height: 9.2rem;
-
 }
 .PrivateNotchedOutline-legendLabelled-4 > span {
-  padding-left: 15px !important
+  padding-left: 15px !important;
+}
+
+[type="file"]::-webkit-file-upload-button {
+  background: #1565d8;
+  color: #fff;
+  border: 1px solid transparent;
+  cursor: pointer;
+  border-radius: 10px;
+  font-size: 12px;
+  outline: none;
+  padding: 10px 25px;
+}
+
+.file-parent {
+  display: flex;
+  margin: 3rem;
+}
+
+.file-parent input {
+  margin: 0 auto;
 }
