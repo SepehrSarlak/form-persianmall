@@ -109,6 +109,10 @@ body {
 .row-input > div {
   display: flex;
   flex: 1 0 49%;
+  /* padding-bottom: 30px; */
+}
+.input {
+  padding-bottom: 30px;
   padding-bottom: 46px;
 }
 
@@ -154,6 +158,49 @@ body {
   padding-top: 0.6rem;
   font-weight: 500
 }
+.input-radio {
+  display: flex;
+  align-items: center;
+}
+input[type="radio"] {
+  width: 22px !important;
+  height: 22px !important;
+  margin-left: 12px !important;
+  vertical-align: top !important;
+  border: 2px solid #ddd !important;
+  border-radius: 4px !important;
+  background: #fff no-repeat center center !important;
+  accent-color: #1565d8 !important;
+}
+
+.text-center-align {
+  display: flex;
+  align-items: center;
+}
+
+.MuiButton-containedPrimary {
+  background-color: #1565d8 !important;
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.flex-between {
+  justify-content: space-between;
+}
+
+.mt-3 {
+  margin-top: 2rem;
+}
+.mb-4 {
+  margin-top: 0.5rem;
+}
 .MuiFormHelperText-root {
   text-align: right !important;
   margin-right: 4px !important;
@@ -172,7 +219,6 @@ body {
   min-height: 9.2rem;
 
 }
-
 .PrivateNotchedOutline-legendLabelled-4 > span {
   padding-left: 15px !important
 }
