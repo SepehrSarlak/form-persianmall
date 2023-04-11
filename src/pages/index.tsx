@@ -4,7 +4,7 @@ import { Field, Form, Formik, FormikConfig, FormikValues } from "formik";
 import { CheckboxWithLabel, TextField, RadioGroup } from "formik-material-ui";
 import React, { useState } from "react";
 import { withStyles } from "@material-ui/core/styles";
-import { object, string } from "yup";
+import { boolean, object, string } from "yup";
 // import { logo } from "../../src/assets/img/form-logo.png";
 const StyledTextField = withStyles({
   root: {
@@ -104,56 +104,68 @@ export default function Home() {
     }
   };
 
+  const checkValue = (value) => {
+    // useState(() => {}, []);
+
+    if (value && typeof value === "string") {
+      if (value.toLowerCase() === "true") return true;
+      if (value.toLowerCase() === "false") return false;
+    }
+
+    return value;
+  };
+  // boolString.toLowerCase() === "true"
+
   return (
     <div className='container'>
       <div className='container-form'>
         <div className='form-right-side'>
-          <div className='title-right-side'>
-            <span>مرحله ۱ از ۳</span>
-            <span className='title'>اطلاعات شخصی</span>
-          </div>
           <FormikStepper initialValues={initialValues} onSubmit={handleSubmit}>
             <FormikStep
               label='Personal Data'
-              validationSchema={object({
-                FirstName: string().required(" نام را به درستی وارد کنید"),
-                LastName: string().required(
-                  " نام خانوادگی را به درستی وارد کنید"
-                ),
-                NationalCode: string()
-                  .max(11, "کد ملی را به درستی وارد کنید")
-                  .required("کد ملی را به درستی وارد کنید")
-                  .matches(
-                    /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/,
-                    "کد ملی را به درستی وارد کنید"
-                  ),
-                PhoneNumber: string()
-                  .max(11, "شماره تماس را به درستی وارد کنید")
-                  .required("شماره تماس را به درستی وارد کنید")
-                  .matches(
-                    /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/,
-                    "شماره تماس را به درستی وارد کنید"
-                  ),
-                PostalCode: string()
-                  .max(10, "کد پستی را به درستی وارد کنید")
-                  .required("کد پستی را به درستی وارد کنید")
-                  .matches(
-                    /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/,
-                    "کد پستی را به درستی وارد کنید"
-                  ),
-                Address: string().required("آدرس را به درستی وارد کنید"),
-                Email: string()
-                  .email("آدرس ایمیل را به درستی وارد کنید")
-                  .required("آدرس ایمیل را به درستی وارد کنید"),
-                BankName: string().required("نام بانک را به درستی وارد کنید"),
-                Sheba: string()
-                  .required("شماره شبا را به درستی وارد کنید")
-                  .matches(
-                    /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/,
-                    "شماره شبا را به درستی وارد کنید"
-                  ),
-              })}
+              // validationSchema={object({
+              //   FirstName: string().required(" نام را به درستی وارد کنید"),
+              //   LastName: string().required(
+              //     " نام خانوادگی را به درستی وارد کنید"
+              //   ),
+              //   NationalCode: string()
+              //     .max(11, "کد ملی را به درستی وارد کنید")
+              //     .required("کد ملی را به درستی وارد کنید")
+              //     .matches(
+              //       /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/,
+              //       "کد ملی را به درستی وارد کنید"
+              //     ),
+              //   PhoneNumber: string()
+              //     .max(11, "شماره تماس را به درستی وارد کنید")
+              //     .required("شماره تماس را به درستی وارد کنید")
+              //     .matches(
+              //       /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/,
+              //       "شماره تماس را به درستی وارد کنید"
+              //     ),
+              //   PostalCode: string()
+              //     .max(10, "کد پستی را به درستی وارد کنید")
+              //     .required("کد پستی را به درستی وارد کنید")
+              //     .matches(
+              //       /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/,
+              //       "کد پستی را به درستی وارد کنید"
+              //     ),
+              //   Address: string().required("آدرس را به درستی وارد کنید"),
+              //   Email: string()
+              //     .email("آدرس ایمیل را به درستی وارد کنید")
+              //     .required("آدرس ایمیل را به درستی وارد کنید"),
+              //   BankName: string().required("نام بانک را به درستی وارد کنید"),
+              //   Sheba: string()
+              //     .required("شماره شبا را به درستی وارد کنید")
+              //     .matches(
+              //       /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/,
+              //       "شماره شبا را به درستی وارد کنید"
+              //     ),
+              // })}
             >
+              <div className='title-right-side'>
+                <span>مرحله 1 از 3</span>
+                <span className='title'>اطلاعات شخصی</span>
+              </div>
               <div className='row-input'>
                 <div className='input'>
                   <Field
@@ -184,6 +196,7 @@ export default function Home() {
                     label='شماره موبایل'
                   />
                 </div>
+
                 <div className='input mr'>
                   <Field
                     fullWidth
@@ -245,41 +258,144 @@ export default function Home() {
                     label='شماره شبا بانکی (حساب بایدبه نام طرف قرارداد باشد)'
                   />
                 </div>
-                {/* <div className='input'>
-                  <Field
-                    fullWidth={true}
-                    name='millionaire'
-                    type='checkbox'
-                    variant='outlined'
-                    component={CheckboxWithLabel}
-                    Label={{ label: "I am a millionaire" }}
-                  />
-                </div> */}
               </div>
             </FormikStep>
-            <FormikStep label='Bank Accounts'>
-              <Field
-                variant='outlined'
-                fullWidth
-                name='money'
-                type='number'
-                component={StyledTextField}
-                label='All the money I have'
-              />
-              <div role='group' aria-labelledby='my-radio-group'>
-                <label>
-                  <Field type='radio' name='picked' value='One' />
-                  One
-                </label>
-                <label>
+            <FormikStep
+              label='Bank Accounts'
+              validationSchema={object({
+                TelegramPhoneNumber: string().required(
+                  "شماره ی تلگرام فروشنده را به درستی وارد کنید"
+                ),
+                EbayVendorName: string(),
+                StoreEnglishName1: string(),
+                StoreEnglishName2: string(),
+                StoreEnglishName3: string(),
+                HasParticipant: string(),
+              })}
+            >
+              <div className='title-right-side'>
+                <span>مرحله 2 از 3</span>
+                <span className='title'>اطلاعات شخصی</span>
+              </div>
+              <div className='row-input'>
+                <div className='input'>
                   <Field
-                    type='radio'
-                    name='picked'
-                    value='Two'
+                    fullWidth
+                    name='TelegramPhoneNumber'
                     variant='outlined'
+                    component={StyledTextField}
+                    label='شماره ی تلگرام فروشنده *'
+                    onchange={(e) => console.log(e.target.value)}
                   />
-                  Two
-                </label>
+                </div>
+                <div className='input mr'>
+                  <Field
+                    fullWidth
+                    name='EbayVendorName'
+                    variant='outlined'
+                    component={StyledTextField}
+                    label='نام فروشنده به لاتین (برای حساب کاربری Bay)'
+                  />
+                </div>
+              </div>
+              <div className='flex-col text-right mt-3'>
+                <div className='text-right'>
+                  نام مورد نظر برای فروشگاه به لاتین (لطفا بنا به الویت 3 نام را
+                  انتخاب کنید)
+                </div>
+                <div className='text-center-align flex-between mt-3'>
+                  <div className='input'>
+                    <Field
+                      fullWidth
+                      name='StoreEnglishName1'
+                      variant='outlined'
+                      component={StyledTextField}
+                    />
+                  </div>
+                  <div className='input mr'>
+                    <Field
+                      fullWidth
+                      name='StoreEnglishName2'
+                      variant='outlined'
+                      component={StyledTextField}
+                    />
+                  </div>
+                  <div className='input mr'>
+                    <Field
+                      fullWidth
+                      name='StoreEnglishName3'
+                      variant='outlined'
+                      component={StyledTextField}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className='text-center-align mt-3'>
+                <div className=''>آیا شریک دارید؟</div>
+
+                <div
+                  className='input-radio mr'
+                  role='group'
+                  aria-labelledby='my-radio-group'
+                >
+                  <label className='text-center-align'>
+                    <Field type='radio' name='HasParticipant' value='true' />
+                    بله
+                  </label>
+                  <label className='text-center-align mr'>
+                    <Field
+                      type='radio'
+                      name='HasParticipant'
+                      value='false'
+                      variant='outlined'
+                    />
+                    خیر
+                  </label>
+                </div>
+              </div>
+
+              <div className='mt-3'>
+                <span>در صورت داشتن شریک لطفا اطلاعات زیر را تکمیل کنید</span>
+                <div className='row-input mt-3'>
+                  <div className='input'>
+                    <Field
+                      fullWidth
+                      name='ParticipantFullName1'
+                      variant='outlined'
+                      component={StyledTextField}
+                      label='نام و نام خانوادگی شریک اول'
+                    />
+                  </div>
+                  <div className='input mr'>
+                    <Field
+                      fullWidth
+                      name='ParticipantPhoneNumber1'
+                      variant='outlined'
+                      component={StyledTextField}
+                      label='شماره موبایل'
+                    />
+                  </div>
+                </div>
+                <div className='row-input'>
+                  <div className='input'>
+                    <Field
+                      fullWidth
+                      name='ParticipantFullName2'
+                      variant='outlined'
+                      component={StyledTextField}
+                      label='نام و نام خانوادگی شریک دوم'
+                    />
+                  </div>
+                  <div className='input mr'>
+                    <Field
+                      fullWidth
+                      name='ParticipantPhoneNumber2'
+                      variant='outlined'
+                      component={StyledTextField}
+                      label='شماره موبایل'
+                    />
+                  </div>
+                </div>
               </div>
             </FormikStep>
             <FormikStep label='Bank Accounts'>
@@ -291,7 +407,7 @@ export default function Home() {
                 label='Description'
               />
             </FormikStep>
-            <FormikStep label='test'>test</FormikStep>
+            <FormikStep label='test'></FormikStep>
           </FormikStepper>
         </div>
         <div className='form-left-side'>

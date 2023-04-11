@@ -54,6 +54,9 @@ body {
 .row-input > div {
   display: flex;
   flex: 1 0 49%;
+  /* padding-bottom: 30px; */
+}
+.input {
   padding-bottom: 30px;
 }
 
@@ -86,4 +89,47 @@ body {
   font-size: 16px;
   color: #8f8f8f;
   padding-top: 0.6rem;
+}
+.input-radio {
+  display: flex;
+  align-items: center;
+}
+input[type="radio"] {
+  width: 22px !important;
+  height: 22px !important;
+  margin-left: 12px !important;
+  vertical-align: top !important;
+  border: 2px solid #ddd !important;
+  border-radius: 4px !important;
+  background: #fff no-repeat center center !important;
+  accent-color: #1565d8 !important;
+}
+
+.text-center-align {
+  display: flex;
+  align-items: center;
+}
+
+.MuiButton-containedPrimary {
+  background-color: #1565d8 !important;
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.flex-between {
+  justify-content: space-between;
+}
+
+.mt-3 {
+  margin-top: 2rem;
+}
+.mb-4 {
+  margin-top: 0.5rem;
 }
