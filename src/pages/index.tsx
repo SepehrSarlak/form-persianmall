@@ -285,7 +285,7 @@ export default function Home() {
                     variant='outlined'
                     component={StyledTextField}
                     label='شماره ی تلگرام فروشنده *'
-                    onchange={(e) => console.log(e.target.value)}
+                    // onchange={(e) => console.log(e.target.value)}
                   />
                 </div>
                 <div className='input mr'>
