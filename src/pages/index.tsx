@@ -13,6 +13,22 @@ import { withStyles } from "@material-ui/core/styles";
 import { boolean, object, string } from "yup";
 import * as Yup from "yup";
 
+// const validationFile = Yup.object().shape({
+//   // NationalCardPicture: Yup.mixed()
+//   //   .required("Please select a file")
+//   //   .test("fileSize", "File size too large", (value) => {
+//   //     return value && value.size <= 5000000; // 5MB
+//   //   })
+//   //   .test("fileType", "Unsupported file type", (value) => {
+//   //     return value && ["image/jpeg", "image/png"].includes(value.type);
+//   //   }),
+// });
+const formm = Yup.object().shape({
+  NationalCardPicture: Yup.mixed().required("asfd"),
+  BirthCertificatePicture: Yup.mixed().required("asfd"),
+  // image: Yup.mixed().required(),
+});
+
 const StyledTextField = withStyles({
   root: {
     "& label": {
@@ -63,6 +79,8 @@ export default function Home() {
     AutoSelectedSaleBranch: boolean;
     IsPaymentDone: boolean;
     PaymentTrackingCode: string;
+    NationalCardPicture: string;
+    BirthCertificatePicture: string;
   }
 
   const initialValues: ContactFormData = {
@@ -98,6 +116,8 @@ export default function Home() {
     AutoSelectedSaleBranch: false,
     IsPaymentDone: false,
     PaymentTrackingCode: "",
+    NationalCardPicture: "",
+    BirthCertificatePicture: "",
   };
 
   const validationSchema = Yup.object().shape({
@@ -208,7 +228,6 @@ export default function Home() {
               //       "شماره شبا را به درستی وارد کنید"
               //     ),
               // })}
-              validationSchema={validationSchema}
             >
               <div className="title-right-side">
                 <span>مرحله 1 از 3</span>
@@ -459,18 +478,26 @@ export default function Home() {
                 </div>
               </div>
             </FormikStep>
-            <FormikStep label="Bank Accounts">
-              <Field
-                variant="outlined"
-                fullWidth
-                name="description"
-                component={StyledTextField}
-                label="Description"
-              />
+            <FormikStep label="Bank Accounts" validationSchema={formm}>
+              <div className="title-right-side">
+                <span>مرحله 3 از 3</span>
+                <span className="title">اطلاعات شخصی</span>
+              </div>
+              <div className="file-parent">
+                <Field
+                  type="file"
+                  name="NationalCardPicture"
+                  accept="image/*"
+                />
+                <Field
+                  type="file"
+                  name="BirthCertificatePicture"
+                  accept="image/*"
+                  label="sadf"
+                />
+              </div>
             </FormikStep>
-            <FormikStep label="test">
-              <input type="file" name="photo" accept="image/*" />
-            </FormikStep>
+            <FormikStep label="test"></FormikStep>
           </FormikStepper>
         </div>
         <div className="form-left-side">
