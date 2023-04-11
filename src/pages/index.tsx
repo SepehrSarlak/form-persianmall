@@ -1,4 +1,10 @@
-import { Box, Button, CircularProgress, Grid, InputAdornment } from "@material-ui/core";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Grid,
+  InputAdornment,
+} from "@material-ui/core";
 import axios from "axios";
 import { Field, Form, Formik, FormikConfig, FormikValues } from "formik";
 import { CheckboxWithLabel, TextField, RadioGroup } from "formik-material-ui";
@@ -6,9 +12,7 @@ import React, { useState } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { boolean, object, string } from "yup";
 // import { logo } from "../../src/assets/img/form-logo.png";
-import * as Yup from 'yup';
-
-
+import * as Yup from "yup";
 
 const StyledTextField = withStyles({
   root: {
@@ -17,7 +21,7 @@ const StyledTextField = withStyles({
       right: 30,
       left: "auto",
       textAlign: "right",
-      minWidth: "150px"
+      minWidth: "150px",
     },
     "& legend": {
       textAlign: "right",
@@ -97,48 +101,45 @@ export default function Home() {
     PaymentTrackingCode: "",
   };
 
-  const validationSchema = Yup.object().shape({
+  const phoneRegExp =
+    /(0|\+98)?([ ]|-|[()]){0,2}9[0|1|2|3|4]([ ]|-|[()]){0,2}(?:[0-9]([ ]|-|[()]){0,2}){8}/gi;
 
-      FirstName: Yup.string().required(" نام را به درستی وارد کنید"),
-      LastName: Yup.string().required(
-        " نام خانوادگی را به درستی وارد کنید"
+  const validationSchema = object({
+    FirstName: string().required(" نام را به درستی وارد کنید"),
+    LastName: string().required(" نام خانوادگی را به درستی وارد کنید"),
+    NationalCode: string()
+      .required("کد ملی را به درستی وارد کنید")
+      .matches(/^[0-9]{10}$/, "کد ملی را به درستی وارد کنید"),
+    PhoneNumber: string()
+      .required("شماره تماس را به درستی وارد کنید")
+      .matches(phoneRegExp, "شماره تماس را به درستی وارد کنید"),
+
+    PostalCode: string()
+      .required("کد پستی را به درستی وارد کنید")
+      .matches(
+        /\b(?!(\d)\1{3})[13-9]{4}[1346-9][013-9]{5}\b/,
+        "کد پستی را به درستی وارد کنید"
       ),
-      NationalCode: Yup.string()
-        .max(11, "کد ملی را به درستی وارد کنید")
-        .required("کد ملی را به درستی وارد کنید")
-        .matches(
-          /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/,
-          "کد ملی را به درستی وارد کنید"
-        ),
-      PhoneNumber: Yup.string()
-        .max(11, "شماره تماس را به درستی وارد کنید")
-        .required("شماره تماس را به درستی وارد کنید")
-        .matches(
-          /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/,
-          "شماره تماس را به درستی وارد کنید"
-        ),
-      PostalCode: Yup.string()
-        .max(10, "کد پستی را به درستی وارد کنید")
-        .required("کد پستی را به درستی وارد کنید")
-        .matches(
-          /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/,
-          "کد پستی را به درستی وارد کنید"
-        ),
-      Address: Yup.string().required("آدرس را به درستی وارد کنید"),
-      Email: Yup.string()
-        .email("آدرس ایمیل را به درستی وارد کنید")
-        .required("آدرس ایمیل را به درستی وارد کنید")
-        .matches(
-          /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-        ),
-      BankName: Yup.string().required("نام بانک را به درستی وارد کنید"),
-      Sheba: Yup.string()
-        .required("شماره شبا را به درستی وارد کنید")
-        .matches(
-          /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/,
-          "شماره شبا را به درستی وارد کنید"
-        ),
-        image: Yup.mixed().required('Image is required'),
+    Address: string().required("آدرس را به درستی وارد کنید"),
+    Email: string()
+      .email("آدرس ایمیل را به درستی وارد کنید")
+      .required("آدرس ایمیل را به درستی وارد کنید")
+      .matches(
+        /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
+      ),
+    BankName: string().required("نام بانک را به درستی وارد کنید"),
+    Sheba: string()
+      .required("شماره شبا را به درستی وارد کنید")
+      .matches(/^(?=.{24}$)[0-9]*$/, "شماره شبا را به درستی وارد کنید"),
+    TelegramPhoneNumber: string()
+      .required("شماره ی تلگرام فروشنده را به درستی وارد کنید")
+      .matches(phoneRegExp, "شماره ی تلگرام فروشنده را به درستی وارد کنید"),
+
+    EbayVendorName: string(),
+    StoreEnglishName1: string(),
+    StoreEnglishName2: string(),
+    StoreEnglishName3: string(),
+    HasParticipant: string(),
   });
 
   const handleSubmit = async (values: ContactFormData) => {
@@ -172,45 +173,8 @@ export default function Home() {
           <FormikStepper initialValues={initialValues} onSubmit={handleSubmit}>
             <FormikStep
               label='Personal Data'
-              // validationSchema={object({
-              //   FirstName: string().required(" نام را به درستی وارد کنید"),
-              //   LastName: string().required(
-              //     " نام خانوادگی را به درستی وارد کنید"
-              //   ),
-              //   NationalCode: string()
-              //     .max(11, "کد ملی را به درستی وارد کنید")
-              //     .required("کد ملی را به درستی وارد کنید")
-              //     .matches(
-              //       /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/,
-              //       "کد ملی را به درستی وارد کنید"
-              //     ),
-              //   PhoneNumber: string()
-              //     .max(11, "شماره تماس را به درستی وارد کنید")
-              //     .required("شماره تماس را به درستی وارد کنید")
-              //     .matches(
-              //       /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/,
-              //       "شماره تماس را به درستی وارد کنید"
-              //     ),
-              //   PostalCode: string()
-              //     .max(10, "کد پستی را به درستی وارد کنید")
-              //     .required("کد پستی را به درستی وارد کنید")
-              //     .matches(
-              //       /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/,
-              //       "کد پستی را به درستی وارد کنید"
-              //     ),
-              //   Address: string().required("آدرس را به درستی وارد کنید"),
-              //   Email: string()
-              //     .email("آدرس ایمیل را به درستی وارد کنید")
-              //     .required("آدرس ایمیل را به درستی وارد کنید"),
-              //   BankName: string().required("نام بانک را به درستی وارد کنید"),
-              //   Sheba: string()
-              //     .required("شماره شبا را به درستی وارد کنید")
-              //     .matches(
-              //       /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/,
-              //       "شماره شبا را به درستی وارد کنید"
-              //     ),
-              // })}
               validationSchema={validationSchema}
+              // validationSchema={validationSchema}
             >
               <div className='title-right-side'>
                 <span>مرحله 1 از 3</span>
@@ -244,7 +208,7 @@ export default function Home() {
                     variant='outlined'
                     component={StyledTextField}
                     label='شماره موبایل'
-                    className="input-left"
+                    className='input-left'
                   />
                 </div>
 
@@ -255,7 +219,7 @@ export default function Home() {
                     variant='outlined'
                     component={StyledTextField}
                     label='کد ملی'
-                    className="input-left"
+                    className='input-left'
                   />
                 </div>
               </div>
@@ -267,7 +231,7 @@ export default function Home() {
                     variant='outlined'
                     component={StyledTextField}
                     label='کد پستی'
-                    className="input-left"
+                    className='input-left'
                   />
                 </div>
                 <div className='input mr' dir='rtl'>
@@ -275,7 +239,7 @@ export default function Home() {
                     fullWidth
                     name='Email'
                     variant='outlined'
-                    className="input-left"
+                    className='input-left'
                     component={StyledTextField}
                     label='آدرس ایمیل'
                   />
@@ -302,37 +266,30 @@ export default function Home() {
                   />
                 </div>
               </div>
-             <div className="special-input">
-              <div className='row-input'>
-                <div className='input'>
-                  <Field
-                  label="شماره شبا بانکی"
-                  className="input-left"
-                    helperText="حساب باید به نام طرف قرارداد باشد"
-                    fullWidth
-                    InputProps={{
-                      endAdornment: <InputAdornment position="end">IR</InputAdornment>,
-                    }}
-                    name='Sheba'
-                    variant='outlined'
-                    component={StyledTextField}
-                  />
+              <div className='special-input'>
+                <div className='row-input'>
+                  <div className='input'>
+                    <Field
+                      label='شماره شبا بانکی'
+                      className='input-left'
+                      helperText='حساب باید به نام طرف قرارداد باشد'
+                      fullWidth
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position='end'>IR</InputAdornment>
+                        ),
+                      }}
+                      name='Sheba'
+                      variant='outlined'
+                      component={StyledTextField}
+                    />
+                  </div>
                 </div>
               </div>
-             </div>
             </FormikStep>
             <FormikStep
               label='Bank Accounts'
-              validationSchema={object({
-                TelegramPhoneNumber: string().required(
-                  "شماره ی تلگرام فروشنده را به درستی وارد کنید"
-                ),
-                EbayVendorName: string(),
-                StoreEnglishName1: string(),
-                StoreEnglishName2: string(),
-                StoreEnglishName3: string(),
-                HasParticipant: string(),
-              })}
+              validationSchema={validationSchema}
             >
               <div className='title-right-side'>
                 <span>مرحله 2 از 3</span>
@@ -359,7 +316,7 @@ export default function Home() {
                   />
                 </div>
               </div>
-              <div className='flex-col text-right mt-3'>
+              <div className='flex-col text-right'>
                 <div className='text-right'>
                   نام مورد نظر برای فروشگاه به لاتین (لطفا بنا به الویت 3 نام را
                   انتخاب کنید)
@@ -391,7 +348,7 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-              <div className='text-center-align mt-3'>
+              <div className='text-center-align'>
                 <div className=''>آیا شریک دارید؟</div>
 
                 <div
@@ -417,7 +374,7 @@ export default function Home() {
 
               <div className='mt-3'>
                 <span>در صورت داشتن شریک لطفا اطلاعات زیر را تکمیل کنید</span>
-                <div className='row-input mt-3'>
+                <div className='row-input my-3'>
                   <div className='input'>
                     <Field
                       fullWidth
@@ -467,7 +424,6 @@ export default function Home() {
                 component={StyledTextField}
                 label='Description'
               />
-              
             </FormikStep>
             <FormikStep label='test'></FormikStep>
           </FormikStepper>
@@ -526,7 +482,12 @@ export function FormikStepper({
       {({ isSubmitting }) => (
         <Form autoComplete='off'>
           {currentChild}
-          <Grid container spacing={2}>
+          <Grid
+            container
+            direction='row-reverse'
+            justifyContent='flex-end'
+            spacing={2}
+          >
             {step > 0 ? (
               <Grid item>
                 <Button
