@@ -556,7 +556,7 @@ export function FormikStepper({
           {currentChild}
           <Grid container spacing={2}>
             {step > 0 ? (
-              <Grid item>
+              <Grid item className="btn-back">
                 <Button
                   disabled={isSubmitting}
                   variant="contained"
@@ -567,7 +567,7 @@ export function FormikStepper({
                 </Button>
               </Grid>
             ) : null}
-            <Grid item>
+            <Grid item className="confirm-btn">
               <Button
                 startIcon={
                   isSubmitting ? <CircularProgress size="1rem" /> : null
