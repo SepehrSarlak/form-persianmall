@@ -1,9 +1,11 @@
-import { createMuiTheme, ThemeProvider } from "@material-ui/core";
+import { ThemeProvider } from "@material-ui/core";
+import { createTheme } from '@material-ui/core/styles';
 import { AppProps } from "next/app";
 import React from "react";
 import "../assets/styles/global-style.css";
 
-const theme = createMuiTheme({
+
+const theme = createTheme({
   palette: {
     primary: {
       main: '#616DD2',

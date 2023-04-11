@@ -11,6 +11,7 @@ import { CheckboxWithLabel, TextField, RadioGroup } from "formik-material-ui";
 import React, { useState } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { boolean, object, string } from "yup";
+
 import * as Yup from "yup";
 
 // const validationFile = Yup.object().shape({
@@ -23,7 +24,7 @@ import * as Yup from "yup";
 //   //     return value && ["image/jpeg", "image/png"].includes(value.type);
 //   //   }),
 // });
-const formm = Yup.object().shape({
+const formValidateFile = Yup.object().shape({
   NationalCardPicture: Yup.mixed().required("asfd"),
   BirthCertificatePicture: Yup.mixed().required("asfd"),
   // image: Yup.mixed().required(),
@@ -120,43 +121,45 @@ export default function Home() {
     BirthCertificatePicture: "",
   };
 
-  const validationSchema = Yup.object().shape({
-    FirstName: Yup.string().required(" نام را به درستی وارد کنید"),
-    LastName: Yup.string().required(" نام خانوادگی را به درستی وارد کنید"),
-    NationalCode: Yup.string()
-      .max(11, "کد ملی را به درستی وارد کنید")
+  const phoneRegExp =
+    /(0|\+98)?([ ]|-|[()]){0,2}9[0|1|2|3|4]([ ]|-|[()]){0,2}(?:[0-9]([ ]|-|[()]){0,2}){8}/gi;
+
+  const validationSchema = object({
+    FirstName: string().required(" نام را به درستی وارد کنید"),
+    LastName: string().required(" نام خانوادگی را به درستی وارد کنید"),
+    NationalCode: string()
       .required("کد ملی را به درستی وارد کنید")
-      .matches(
-        /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/,
-        "کد ملی را به درستی وارد کنید"
-      ),
-    PhoneNumber: Yup.string()
-      .max(11, "شماره تماس را به درستی وارد کنید")
+      .matches(/^[0-9]{10}$/, "کد ملی را به درستی وارد کنید"),
+    PhoneNumber: string()
       .required("شماره تماس را به درستی وارد کنید")
-      .matches(
-        /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/,
-        "شماره تماس را به درستی وارد کنید"
-      ),
-    PostalCode: Yup.string()
-      .max(10, "کد پستی را به درستی وارد کنید")
+      .matches(phoneRegExp, "شماره تماس را به درستی وارد کنید"),
+
+    PostalCode: string()
       .required("کد پستی را به درستی وارد کنید")
       .matches(
-        /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/,
+        /\b(?!(\d)\1{3})[13-9]{4}[1346-9][013-9]{5}\b/,
         "کد پستی را به درستی وارد کنید"
       ),
-    Address: Yup.string().required("آدرس را به درستی وارد کنید"),
-    Email: Yup.string()
+    Address: string().required("آدرس را به درستی وارد کنید"),
+    Email: string()
       .email("آدرس ایمیل را به درستی وارد کنید")
       .required("آدرس ایمیل را به درستی وارد کنید")
-      .matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/),
-    BankName: Yup.string().required("نام بانک را به درستی وارد کنید"),
-    Sheba: Yup.string()
-      .required("شماره شبا را به درستی وارد کنید")
       .matches(
-        /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/,
-        "شماره شبا را به درستی وارد کنید"
+        /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
       ),
-    image: Yup.mixed().required("Image is required"),
+    BankName: string().required("نام بانک را به درستی وارد کنید"),
+    Sheba: string()
+      .required("شماره شبا را به درستی وارد کنید")
+      .matches(/^(?=.{24}$)[0-9]*$/, "شماره شبا را به درستی وارد کنید"),
+    TelegramPhoneNumber: string()
+      .required("شماره ی تلگرام فروشنده را به درستی وارد کنید")
+      .matches(phoneRegExp, "شماره ی تلگرام فروشنده را به درستی وارد کنید"),
+
+    EbayVendorName: string(),
+    StoreEnglishName1: string(),
+    StoreEnglishName2: string(),
+    StoreEnglishName3: string(),
+    HasParticipant: string(),
   });
 
   const handleSubmit = async (values: ContactFormData) => {
@@ -171,168 +174,118 @@ export default function Home() {
     }
   };
 
-  const checkValue = (value) => {
-    // useState(() => {}, []);
-
-    if (value && typeof value === "string") {
-      if (value.toLowerCase() === "true") return true;
-      if (value.toLowerCase() === "false") return false;
-    }
-
-    return value;
-  };
-  // boolString.toLowerCase() === "true"
-
   return (
-    <div className="container">
-      <div className="container-form">
-        <div className="form-right-side">
+    <div className='container'>
+      <div className='container-form'>
+        <div className='form-right-side'>
           <FormikStepper initialValues={initialValues} onSubmit={handleSubmit}>
             <FormikStep
-              label="Personal Data"
-              // validationSchema={object({
-              //   FirstName: string().required(" نام را به درستی وارد کنید"),
-              //   LastName: string().required(
-              //     " نام خانوادگی را به درستی وارد کنید"
-              //   ),
-              //   NationalCode: string()
-              //     .max(11, "کد ملی را به درستی وارد کنید")
-              //     .required("کد ملی را به درستی وارد کنید")
-              //     .matches(
-              //       /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/,
-              //       "کد ملی را به درستی وارد کنید"
-              //     ),
-              //   PhoneNumber: string()
-              //     .max(11, "شماره تماس را به درستی وارد کنید")
-              //     .required("شماره تماس را به درستی وارد کنید")
-              //     .matches(
-              //       /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/,
-              //       "شماره تماس را به درستی وارد کنید"
-              //     ),
-              //   PostalCode: string()
-              //     .max(10, "کد پستی را به درستی وارد کنید")
-              //     .required("کد پستی را به درستی وارد کنید")
-              //     .matches(
-              //       /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/,
-              //       "کد پستی را به درستی وارد کنید"
-              //     ),
-              //   Address: string().required("آدرس را به درستی وارد کنید"),
-              //   Email: string()
-              //     .email("آدرس ایمیل را به درستی وارد کنید")
-              //     .required("آدرس ایمیل را به درستی وارد کنید"),
-              //   BankName: string().required("نام بانک را به درستی وارد کنید"),
-              //   Sheba: string()
-              //     .required("شماره شبا را به درستی وارد کنید")
-              //     .matches(
-              //       /^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/,
-              //       "شماره شبا را به درستی وارد کنید"
-              //     ),
-              // })}
+              label='Personal Data'
+              validationSchema={validationSchema}
             >
-              <div className="title-right-side">
+              <div className='title-right-side'>
                 <span>مرحله 1 از 3</span>
-                <span className="title">اطلاعات شخصی</span>
+                <span className='title'>اطلاعات شخصی</span>
               </div>
-              <div className="row-input">
-                <div className="input">
+              <div className='row-input'>
+                <div className='input'>
                   <Field
                     fullWidth
-                    name="FirstName"
-                    variant="outlined"
+                    name='FirstName'
+                    variant='outlined'
                     component={StyledTextField}
-                    label="نام"
+                    label='نام'
                   />
                 </div>
-                <div className="input mr">
+                <div className='input mr'>
                   <Field
                     fullWidth
-                    name="LastName"
-                    variant="outlined"
+                    name='LastName'
+                    variant='outlined'
                     component={StyledTextField}
-                    label="نام خانوادگی"
-                  />
-                </div>
-              </div>
-              <div className="row-input">
-                <div className="input">
-                  <Field
-                    fullWidth
-                    name="PhoneNumber"
-                    variant="outlined"
-                    component={StyledTextField}
-                    label="شماره موبایل"
-                    className="input-left"
-                  />
-                </div>
-                <div className="input mr">
-                  <Field
-                    fullWidth
-                    name="NationalCode"
-                    variant="outlined"
-                    component={StyledTextField}
-                    label="کد ملی"
-                    className="input-left"
+                    label='نام خانوادگی'
                   />
                 </div>
               </div>
-              <div className="row-input">
-                <div className="input">
+              <div className='row-input'>
+                <div className='input'>
                   <Field
                     fullWidth
-                    name="PostalCode"
-                    variant="outlined"
+                    name='PhoneNumber'
+                    variant='outlined'
                     component={StyledTextField}
-                    label="کد پستی"
-                    className="input-left"
+                    label='شماره موبایل'
                   />
                 </div>
-                <div className="input mr" dir="rtl">
+                <div className='input mr'>
                   <Field
                     fullWidth
-                    name="Email"
-                    variant="outlined"
-                    className="input-left"
+                    name='NationalCode'
+                    variant='outlined'
                     component={StyledTextField}
-                    label="آدرس ایمیل"
-                  />
-                </div>
-              </div>
-              <div className="row-input">
-                <div className="input">
-                  <Field
-                    fullWidth
-                    name="Address"
-                    variant="outlined"
-                    component={StyledTextField}
-                    label="آدرس"
-                  />
-                </div>
-                <div className="input mr">
-                  <Field
-                    direction="rtl"
-                    fullWidth
-                    name="BankName"
-                    variant="outlined"
-                    component={StyledTextField}
-                    label="نام بانک"
+                    label='کد ملی'
+                    className='input-left'
                   />
                 </div>
               </div>
-              <div className="special-input">
-                <div className="row-input">
-                  <div className="input">
+              <div className='row-input'>
+                <div className='input'>
+                  <Field
+                    fullWidth
+                    name='PostalCode'
+                    variant='outlined'
+                    component={StyledTextField}
+                    label='کد پستی'
+                    className='input-left'
+                  />
+                </div>
+                <div className='input mr' dir='rtl'>
+                  <Field
+                    fullWidth
+                    name='Email'
+                    variant='outlined'
+                    className='input-left'
+                    component={StyledTextField}
+                    label='آدرس ایمیل'
+                  />
+                </div>
+              </div>
+              <div className='row-input'>
+                <div className='input'>
+                  <Field
+                    fullWidth
+                    name='Address'
+                    variant='outlined'
+                    component={StyledTextField}
+                    label='آدرس'
+                  />
+                </div>
+                <div className='input mr'>
+                  <Field
+                    direction='rtl'
+                    fullWidth
+                    name='BankName'
+                    variant='outlined'
+                    component={StyledTextField}
+                    label='نام بانک'
+                  />
+                </div>
+              </div>
+              <div className='special-input'>
+                <div className='row-input'>
+                  <div className='input'>
                     <Field
-                      label="شماره شبا بانکی"
-                      className="input-left"
-                      helperText="حساب باید به نام طرف قرارداد باشد"
+                      label='شماره شبا بانکی'
+                      className='input-left'
+                      helperText='حساب باید به نام طرف قرارداد باشد'
                       fullWidth
                       InputProps={{
                         endAdornment: (
-                          <InputAdornment position="end">IR</InputAdornment>
+                          <InputAdornment position='end'>IR</InputAdornment>
                         ),
                       }}
-                      name="Sheba"
-                      variant="outlined"
+                      name='Sheba'
+                      variant='outlined'
                       component={StyledTextField}
                     />
                   </div>
@@ -341,178 +294,168 @@ export default function Home() {
             </FormikStep>
 
             <FormikStep
-              label="Bank Accounts"
-              validationSchema={object({
-                TelegramPhoneNumber: string().required(
-                  "شماره ی تلگرام فروشنده را به درستی وارد کنید"
-                ),
-                EbayVendorName: string(),
-                StoreEnglishName1: string(),
-                StoreEnglishName2: string(),
-                StoreEnglishName3: string(),
-                HasParticipant: string(),
-              })}
+              label='Bank Accounts'
+              validationSchema={validationSchema}
             >
-              <div className="title-right-side">
+              <div className='title-right-side'>
                 <span>مرحله 2 از 3</span>
-                <span className="title">اطلاعات شخصی</span>
+                <span className='title'>اطلاعات شخصی</span>
               </div>
-              <div className="row-input">
-                <div className="input">
+              <div className='row-input'>
+                <div className='input'>
                   <Field
                     fullWidth
-                    name="TelegramPhoneNumber"
-                    variant="outlined"
+                    name='TelegramPhoneNumber'
+                    variant='outlined'
                     component={StyledTextField}
-                    label="شماره ی تلگرام فروشنده *"
+                    label='شماره ی تلگرام فروشنده *'
                     // onchange={(e) => console.log(e.target.value)}
                   />
                 </div>
-                <div className="input mr">
+                <div className='input mr'>
                   <Field
                     fullWidth
-                    name="EbayVendorName"
-                    variant="outlined"
+                    name='EbayVendorName'
+                    variant='outlined'
                     component={StyledTextField}
-                    label="نام فروشنده به لاتین (برای حساب کاربری Bay)"
+                    label='نام فروشنده به لاتین (برای حساب کاربری Bay)'
                   />
                 </div>
               </div>
-              <div className="flex-col text-right mt-3">
-                <div className="text-right">
+              <div className='flex-col text-right'>
+                <div className='text-right'>
                   نام مورد نظر برای فروشگاه به لاتین (لطفا بنا به الویت 3 نام را
                   انتخاب کنید)
                 </div>
-                <div className="text-center-align flex-between mt-3">
-                  <div className="input">
+                <div className='text-center-align flex-between mt-3'>
+                  <div className='input'>
                     <Field
                       fullWidth
-                      name="StoreEnglishName1"
-                      variant="outlined"
+                      name='StoreEnglishName1'
+                      variant='outlined'
                       component={StyledTextField}
                     />
                   </div>
-                  <div className="input mr">
+                  <div className='input mr'>
                     <Field
                       fullWidth
-                      name="StoreEnglishName2"
-                      variant="outlined"
+                      name='StoreEnglishName2'
+                      variant='outlined'
                       component={StyledTextField}
                     />
                   </div>
-                  <div className="input mr">
+                  <div className='input mr'>
                     <Field
                       fullWidth
-                      name="StoreEnglishName3"
-                      variant="outlined"
+                      name='StoreEnglishName3'
+                      variant='outlined'
                       component={StyledTextField}
                     />
                   </div>
                 </div>
               </div>
-              <div className="text-center-align mt-3">
-                <div className="">آیا شریک دارید؟</div>
+              <div className='text-center-align'>
+                <div className=''>آیا شریک دارید؟</div>
 
                 <div
-                  className="input-radio mr"
-                  role="group"
-                  aria-labelledby="my-radio-group"
+                  className='input-radio mr'
+                  role='group'
+                  aria-labelledby='my-radio-group'
                 >
-                  <label className="text-center-align">
-                    <Field type="radio" name="HasParticipant" value="true" />
+                  <label className='text-center-align'>
+                    <Field type='radio' name='HasParticipant' value='true' />
                     بله
                   </label>
-                  <label className="text-center-align mr">
+                  <label className='text-center-align mr'>
                     <Field
-                      type="radio"
-                      name="HasParticipant"
-                      value="false"
-                      variant="outlined"
+                      type='radio'
+                      name='HasParticipant'
+                      value='false'
+                      variant='outlined'
                     />
                     خیر
                   </label>
                 </div>
               </div>
 
-              <div className="mt-3">
+              <div className='mt-3'>
                 <span>در صورت داشتن شریک لطفا اطلاعات زیر را تکمیل کنید</span>
-                <div className="row-input mt-3">
-                  <div className="input">
+                <div className='row-input my-3'>
+                  <div className='input'>
                     <Field
                       fullWidth
-                      name="ParticipantFullName1"
-                      variant="outlined"
+                      name='ParticipantFullName1'
+                      variant='outlined'
                       component={StyledTextField}
-                      label="نام و نام خانوادگی شریک اول"
+                      label='نام و نام خانوادگی شریک اول'
                     />
                   </div>
-                  <div className="input mr">
+                  <div className='input mr'>
                     <Field
                       fullWidth
-                      name="ParticipantPhoneNumber1"
-                      variant="outlined"
+                      name='ParticipantPhoneNumber1'
+                      variant='outlined'
                       component={StyledTextField}
-                      label="شماره موبایل"
+                      label='شماره موبایل'
                     />
                   </div>
                 </div>
-                <div className="row-input">
-                  <div className="input">
+                <div className='row-input'>
+                  <div className='input'>
                     <Field
                       fullWidth
-                      name="ParticipantFullName2"
-                      variant="outlined"
+                      name='ParticipantFullName2'
+                      variant='outlined'
                       component={StyledTextField}
-                      label="نام و نام خانوادگی شریک دوم"
+                      label='نام و نام خانوادگی شریک دوم'
                     />
                   </div>
-                  <div className="input mr">
+                  <div className='input mr'>
                     <Field
                       fullWidth
-                      name="ParticipantPhoneNumber2"
-                      variant="outlined"
+                      name='ParticipantPhoneNumber2'
+                      variant='outlined'
                       component={StyledTextField}
-                      label="شماره موبایل"
+                      label='شماره موبایل'
                     />
                   </div>
                 </div>
               </div>
             </FormikStep>
-            <FormikStep label="Bank Accounts" validationSchema={formm}>
-              <div className="title-right-side">
+            <FormikStep label='Bank Accounts' validationSchema={formValidateFile}>
+              <div className='title-right-side'>
                 <span>مرحله 3 از 3</span>
-                <span className="title">اطلاعات شخصی</span>
+                <span className='title'>اطلاعات شخصی</span>
               </div>
-              <div className="file-parent">
+              <div className='file-parent'>
                 <Field
-                  type="file"
-                  name="NationalCardPicture"
-                  accept="image/*"
+                  type='file'
+                  name='NationalCardPicture'
+                  accept='image/*'
                 />
                 <Field
-                  type="file"
-                  name="BirthCertificatePicture"
-                  accept="image/*"
-                  label="sadf"
+                  type='file'
+                  name='BirthCertificatePicture'
+                  accept='image/*'
+                  label='sadf'
                 />
               </div>
             </FormikStep>
-            <FormikStep label="test"></FormikStep>
+            <FormikStep label='test'></FormikStep>
           </FormikStepper>
         </div>
-        <div className="form-left-side">
+        <div className='form-left-side'>
           <span>
             پاساژ یک مرکز خرید و فروش آنلاین پوشاک و آرایشی است که خدمات خود را
             به صورت رایگان (بدون کارمزد) ارائه می نماید. هم اکنون بیش از 15,000
             فروشگاه از سراسر ایران در حال فعالیت در پاساژ می باشند.
           </span>
-          <div className="logo"></div>
+          <div className='logo'></div>
         </div>
       </div>
     </div>
   );
 }
-
 export interface FormikStepProps
   extends Pick<FormikConfig<FormikValues>, "children" | "validationSchema"> {
   label: string;
@@ -552,15 +495,20 @@ export function FormikStepper({
       }}
     >
       {({ isSubmitting }) => (
-        <Form autoComplete="off">
+        <Form autoComplete='off'>
           {currentChild}
-          <Grid container spacing={2}>
+          <Grid
+            container
+            direction='row-reverse'
+            justifyContent='flex-end'
+            spacing={2}
+          >
             {step > 0 ? (
               <Grid item className="btn-back">
                 <Button
                   disabled={isSubmitting}
-                  variant="contained"
-                  color="primary"
+                  variant='contained'
+                  color='primary'
                   onClick={() => setStep((s) => s - 1)}
                 >
                   مرحله قبل
@@ -570,12 +518,12 @@ export function FormikStepper({
             <Grid item className="confirm-btn">
               <Button
                 startIcon={
-                  isSubmitting ? <CircularProgress size="1rem" /> : null
+                  isSubmitting ? <CircularProgress size='1rem' /> : null
                 }
                 disabled={isSubmitting}
-                variant="contained"
-                color="primary"
-                type="submit"
+                variant='contained'
+                color='primary'
+                type='submit'
               >
                 {isSubmitting ? "ثبت" : isLastStep() ? "ثبت" : "مرحله بعد"}
               </Button>
