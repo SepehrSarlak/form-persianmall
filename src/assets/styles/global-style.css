@@ -1,5 +1,52 @@
+
+@font-face {
+  font-family: 'MyFont';
+  src: url('./../fonts/yekanbakh/YekanBakhFaLight.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'MyFont';
+  src: url('./../fonts/yekanbakh/YekanBakhFaMedium.woff') format('woff');
+  font-weight: 500;
+  font-style: medium;
+}
+
+
+@font-face {
+  font-family: 'MyFont';
+  src: url('./../fonts/yekanbakh/YekanBakhFaBold.woff') format('woff');
+  font-weight: 700;
+  font-style: bold;
+}
+
+
+
+body {
+  font-family: 'MyFont', sans-serif;
+}
+
 body {
   margin: 0;
+}
+
+.logo {
+  background-image: url("./../img/form-logo.png");
+  background-repeat: no-repeat;
+  background-size: 50%;
+  background-position: bottom center;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.MuiFormLabel-root , .MuiFormHelperText-root , .MuiButton-root {
+  font-family: 'MyFont', sans-serif !important;
+
 }
 .container {
   width: 100%;
@@ -12,23 +59,27 @@ body {
   height: 100vh;
 }
 .container-form .form-left-side {
-  width: 40%;
+  position: relative;
+  width: 35%;
   height: 100%;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 4rem;
+  padding: 0 3rem 0 2rem;
   text-align: right;
   line-height: 2;
   color: #fff;
 }
 
 .container-form .form-right-side {
-  width: calc(100% - 40%);
+  width: calc(100% - 35%);
   height: 100%;
   height: 100%;
+  padding: 0 1rem;
 }
+
+
 
 .container-form .form-right-side > form {
   margin: 0 1.5rem;
@@ -36,6 +87,7 @@ body {
 .container-form .form-right-side > form input {
   border-radius: 0.7rem !important;
   border-color: #8692a6;
+  
 }
 
 .container-form .form-left-side {
@@ -43,6 +95,9 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+}
+.container-form .form-left-side span {
+  font-weight: 500
 }
 
 .row-input {
@@ -54,7 +109,7 @@ body {
 .row-input > div {
   display: flex;
   flex: 1 0 49%;
-  padding-bottom: 30px;
+  padding-bottom: 46px;
 }
 
 .mr {
@@ -63,6 +118,12 @@ body {
 
 .row-input .input {
   position: relative;
+
+}
+
+.row-input .input input{
+  border-radius: 2rem !important;
+
 }
 .row-input
   .input
@@ -70,6 +131,11 @@ body {
   position: absolute;
   top: 100%;
   right: 0;
+}
+
+.row-input .input .input-left input {
+  text-align: left !important;
+  direction: ltr !important;
 }
 
 .title-right-side {
@@ -86,4 +152,27 @@ body {
   font-size: 16px;
   color: #8f8f8f;
   padding-top: 0.6rem;
+  font-weight: 500
+}
+.MuiFormHelperText-root {
+  text-align: right !important;
+  margin-right: 4px !important;
+  font-size: 13px !important;
+  padding-top: 0.5rem;
+}
+.MuiOutlinedInput-root {
+  border-radius: 8px !important
+}
+
+.MuiOutlinedInput-adornedEnd {
+  padding-left: 14px
+}
+
+.special-input {
+  min-height: 9.2rem;
+
+}
+
+.PrivateNotchedOutline-legendLabelled-4 > span {
+  padding-left: 15px !important
 }
