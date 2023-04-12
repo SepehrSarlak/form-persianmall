@@ -166,14 +166,16 @@ export default function Home() {
     HasParticipant: string(),
   });
   const validationSchemaThirdStep = object({
-    TelegramPhoneNumber: string()
-      .required("شماره ی تلگرام فروشنده را به درستی وارد کنید")
-      .matches(phoneRegExp, "شماره ی تلگرام فروشنده را به درستی وارد کنید"),
-    EbayVendorName: string(),
-    StoreEnglishName1: string(),
-    StoreEnglishName2: string(),
-    StoreEnglishName3: string(),
-    HasParticipant: string(),
+    SelectedSalesBranch: string(),
+    ProductName1: string(),
+    ProductName2: string(),
+    ProductName3: string(),
+    ProductName4: string(),
+    ProductName5: string(),
+    ProductName6: string(),
+    ProductName7: string(),
+    ProductName8: string(),
+    ProductName9: string(),
   });
 
   const handleSubmit = async (values: ContactFormData) => {
@@ -260,6 +262,23 @@ export default function Home() {
         }
       ),
   });
+  // const validationSchema2 = object({
+  //   EbayVendorName: string(),
+  //   StoreEnglishName1: string(),
+  //   StoreEnglishName2: string(),
+  //   StoreEnglishName3: string(),
+  //   HasParticipant: string(),
+
+  //   ParticipantPhoneNumber1: string()
+  //     .required("شماره موبایل را به درستی وارد کنید")
+  //     .matches(phoneRegExp, "شماره موبایل را به درستی وارد کنید"),
+  //   ParticipantPhoneNumber2: string()
+  //     .required("شماره موبایل را به درستی وارد کنید")
+  //     .matches(phoneRegExp, "شماره موبایل را به درستی وارد کنید"),
+  //   TelegramPhoneNumber: string()
+  //     .required("شماره ی تلگرام فروشنده را به درستی وارد کنید")
+  //     .matches(phoneRegExp, "شماره ی تلگرام فروشنده را به درستی وارد کنید"),
+  // });
 
   const FileUpload = ({ fileRef, ...props }) => {
     const [field, meta] = useField(props);
@@ -322,10 +341,7 @@ export default function Home() {
       <div className="container-form">
         <div className="form-right-side">
           <FormikStepper initialValues={initialValues} onSubmit={handleSubmit}>
-            <FormikStep
-              label="Personal Data"
-              // validationSchema={validationSchema}
-            >
+            <FormikStep label="Personal Data">
               <div className="title-right-side">
                 <span>مرحله 1 از 3</span>
                 <span className="title">اطلاعات شخصی</span>
@@ -436,11 +452,7 @@ export default function Home() {
                 </div>
               </div>
             </FormikStep>
-
-            <FormikStep
-              label="Bank Accounts"
-              // validationSchema={validationSchemaSecondStep}
-            >
+            <FormikStep label="Bank Accounts">
               <div className="title-right-side">
                 <span>مرحله 2 از 3</span>
                 <span className="title">اطلاعات شخصی</span>
@@ -480,7 +492,8 @@ export default function Home() {
                       component={StyledTextField}
                     />
                   </div>
-                  <div className="input mr">
+
+                  <div className="input mr w-30">
                     <Field
                       fullWidth
                       name="StoreEnglishName2"
@@ -488,7 +501,7 @@ export default function Home() {
                       component={StyledTextField}
                     />
                   </div>
-                  <div className="input mr">
+                  <div className="input mr w-30">
                     <Field
                       fullWidth
                       name="StoreEnglishName3"
@@ -568,35 +581,212 @@ export default function Home() {
             </FormikStep>
             <FormikStep
               label="Bank Accounts"
-              validationSchema={formValidateFile}
+              validationSchema={validationSchemaThirdStep}
             >
               <div className="title-right-side">
                 <span>مرحله 3 از 3</span>
-                <span className="title">اطلاعات شخصی</span>
+                <span className="title">اطلاعات</span>
               </div>
-       <div>
-       <div className="file-parent flex">
-                {/* <Field
-                    type="file"
-                    name="NationalCardPicture"
-                    accept="image/*"
-                  /> */}
-                  <div className="fileLabel">انتخاب تصویر کارت ملی</div>
-                <FileUpload name="NationalCardPicture" fileRef={fileRef} />
+
+              <div className="form-step-third">
+                <div>
+                  <div className="">
+                    الف) در کدام طبقه میخواهید فروشگاه اینترنتی خود را راه
+                    اندازی کنید؟ (لطفا فقط یک مورد را انتخاب کنید)
+                  </div>
+
+                  <div className="mt-2">
+                    <div
+                      className="input-radio"
+                      role="group"
+                      aria-labelledby="my-radio-group"
+                    >
+                      <label className="text-center-align">
+                        <Field
+                          type="radio"
+                          name="SelectedSalesBranch"
+                          value="1"
+                        />
+                        طبقه ی اول: محصولات مرتبط با نوزاد، کودک و نوجوان (شامل
+                        پوشاک و سایر موارد)
+                      </label>
+                      <label className="text-center-align">
+                        <Field
+                          type="radio"
+                          name="SelectedSalesBranch"
+                          value="2"
+                          variant="outlined"
+                        />
+                        طبقه ی دوم: محصولات مرتبط با بانوان (شامل پوشاک و سایر
+                        موارد)
+                      </label>
+                      <label className="text-center-align">
+                        <Field
+                          type="radio"
+                          name="SelectedSalesBranch"
+                          value="3"
+                          variant="outlined"
+                        />
+                        طبقه ی سوم: محصولات مرتبط با آقایان (شامل پوشاک و سایر
+                        موارد)
+                      </label>
+                      <label className="text-center-align">
+                        <Field
+                          type="radio"
+                          name="SelectedSalesBranch"
+                          value="4"
+                          variant="outlined"
+                        />
+                        طبقه ی سوم: محصولات مرتبط با آقایان (شامل پوشاک و سایر
+                        موارد)
+                      </label>
+                      <label className="text-center-align">
+                        <Field
+                          type="radio"
+                          name="SelectedSalesBranch"
+                          value="5"
+                          variant="outlined"
+                        />
+                        طبقه ی چهارم: محصولات اکسسوری، هنری و صنایع دستی (بجز
+                        پوشاک)
+                      </label>
+                      <label className="text-center-align">
+                        <Field
+                          type="radio"
+                          name="SelectedSalesBranch"
+                          value="0"
+                          variant="outlined"
+                        />
+                        مایلم پرشین مال با توجه به نیاز بازار ایرانیان خارج از
+                        کشور، طبقه ی فروشگاه من را مشخص کند.
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div className="mt-3 w-full my-3">
+                  <div>
+                    ب) با توجه به طبقه ی انتخاب شده، مایل به فروش چه محصولی
+                    هستید؟
+                  </div>
+                  <div className="row-input my-3">
+                    <div className="input w-30">
+                      <Field
+                        fullWidth
+                        name="ProductName1"
+                        variant="outlined"
+                        component={StyledTextField}
+                        label="الویت اول"
+                      />
+                    </div>
+                    <div className="input mr w-30">
+                      <Field
+                        fullWidth
+                        name="ProductName2"
+                        variant="outlined"
+                        component={StyledTextField}
+                        label="الویت دوم"
+                      />
+                    </div>
+                  </div>
+                  <div className="row-input my-3">
+                    <div className="input w-30">
+                      <Field
+                        fullWidth
+                        name="ProductName3"
+                        variant="outlined"
+                        component={StyledTextField}
+                        label="الویت سوم"
+                      />
+                    </div>
+                    <div className="input mr w-30">
+                      <Field
+                        fullWidth
+                        name="ProductName4"
+                        variant="outlined"
+                        component={StyledTextField}
+                        label="الویت چهارم"
+                      />
+                    </div>
+                  </div>
+                  <div className="row-input">
+                    <div className="input w-30">
+                      <Field
+                        fullWidth
+                        name="ProductName5"
+                        variant="outlined"
+                        component={StyledTextField}
+                        label="الویت پنجم"
+                      />
+                    </div>
+                    <div className="input mr w-30">
+                      <Field
+                        fullWidth
+                        name="ProductName6"
+                        variant="outlined"
+                        component={StyledTextField}
+                        label="الویت ششم"
+                      />
+                    </div>
+                  </div>
+                  <div className="text-center-align flex-between mt-3 flex-wrap">
+                    <div className="input w-30">
+                      <Field
+                        fullWidth
+                        name="ProductName7"
+                        variant="outlined"
+                        component={StyledTextField}
+                        label="الویت هفتم"
+                      />
+                    </div>
+                    <div className="input mr w-30">
+                      <Field
+                        fullWidth
+                        name="ProductName8"
+                        variant="outlined"
+                        component={StyledTextField}
+                        label="الویت هشتم"
+                      />
+                    </div>
+                    <div className="input mr w-30">
+                      <Field
+                        fullWidth
+                        name="ProductName9"
+                        variant="outlined"
+                        component={StyledTextField}
+                        label="الویت نهم"
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
+            </FormikStep>
+            <FormikStep label="Bank Accounts">
+              <div className="file-parent">
+                <Field
+                  type="file"
+                  name="NationalCardPicture"
+                  accept="image/*"
+                />
+                <Field
+                  type="file"
+                  name="BirthCertificatePicture"
+                  accept="image/*"
+                  label="sadf"
+                />
+              </div>
+            </FormikStep>
+
+            <FormikStep label="test">
               <div className="file-parent flex">
                 {/* <Field
                     type="file"
                     name="NationalCardPicture"
                     accept="image/*"
                   /> */}
-                                    <div className="fileLabel">انتخاب تصویر شناسنامه</div>
+                <div className="fileLabel">انتخاب تصویر شناسنامه</div>
                 <FileUpload name="BirthCertificatePicture" fileRef={fileRef} />
               </div>
-       </div>
             </FormikStep>
-
-            <FormikStep label="test"></FormikStep>
           </FormikStepper>
         </div>
         <div className="form-left-side">
