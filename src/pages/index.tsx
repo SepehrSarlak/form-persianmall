@@ -190,6 +190,24 @@ export default function Home() {
     }
   };
 
+  const validationSchema2 = object({
+    EbayVendorName: string(),
+    StoreEnglishName1: string(),
+    StoreEnglishName2: string(),
+    StoreEnglishName3: string(),
+    HasParticipant: string(),
+
+    ParticipantPhoneNumber1: string()
+      .required("شماره موبایل را به درستی وارد کنید")
+      .matches(phoneRegExp, "شماره موبایل را به درستی وارد کنید"),
+    ParticipantPhoneNumber2: string()
+      .required("شماره موبایل را به درستی وارد کنید")
+      .matches(phoneRegExp, "شماره موبایل را به درستی وارد کنید"),
+    TelegramPhoneNumber: string()
+      .required("شماره ی تلگرام فروشنده را به درستی وارد کنید")
+      .matches(phoneRegExp, "شماره ی تلگرام فروشنده را به درستی وارد کنید"),
+  });
+
   return (
     <div className='container'>
       <div className='container-form'>
@@ -197,7 +215,7 @@ export default function Home() {
           <FormikStepper initialValues={initialValues} onSubmit={handleSubmit}>
             <FormikStep
               label='Personal Data'
-              // validationSchema={validationSchema}
+              validationSchema={validationSchema}
             >
               <div className='title-right-side'>
                 <span>مرحله 1 از 3</span>
@@ -231,6 +249,7 @@ export default function Home() {
                     variant='outlined'
                     component={StyledTextField}
                     label='شماره موبایل'
+                    className='input-left'
                   />
                 </div>
                 <div className='input mr'>
@@ -335,14 +354,6 @@ export default function Home() {
                     variant='outlined'
                     component={StyledTextField}
                     label='نام فروشنده به لاتین (برای حساب کاربری Bay)'
-                    onChange={(e) => console.log(3333)}
-                    InputProps={
-                      {
-                        // onchange = () => {
-                        //   console.log(333);
-                        // },
-                      }
-                    }
                   />
                 </div>
               </div>
