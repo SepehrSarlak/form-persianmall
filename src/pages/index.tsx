@@ -151,7 +151,31 @@ export default function Home() {
     Sheba: string()
       .required("شماره شبا را به درستی وارد کنید")
       .matches(/^(?=.{24}$)[0-9]*$/, "شماره شبا را به درستی وارد کنید"),
- 
+    TelegramPhoneNumber: string()
+      .required("شماره ی تلگرام فروشنده را به درستی وارد کنید")
+      .matches(phoneRegExp, "شماره ی تلگرام فروشنده را به درستی وارد کنید"),
+  });
+  const validationSchemaSecondStep = object({
+    TelegramPhoneNumber: string()
+      .required("شماره ی تلگرام فروشنده را به درستی وارد کنید")
+      .matches(phoneRegExp, "شماره ی تلگرام فروشنده را به درستی وارد کنید"),
+    EbayVendorName: string()
+      .required("نام فروشنده را به درستی وارد کنید")
+      .matches(/^[a-z\s'&]*$/i, "نام فروشنده را به درستی وارد کنید"),
+    StoreEnglishName1: string(),
+    StoreEnglishName2: string(),
+    StoreEnglishName3: string(),
+    HasParticipant: string(),
+  });
+  const validationSchemaThirdStep = object({
+    TelegramPhoneNumber: string()
+      .required("شماره ی تلگرام فروشنده را به درستی وارد کنید")
+      .matches(phoneRegExp, "شماره ی تلگرام فروشنده را به درستی وارد کنید"),
+    EbayVendorName: string(),
+    StoreEnglishName1: string(),
+    StoreEnglishName2: string(),
+    StoreEnglishName3: string(),
+    HasParticipant: string(),
   });
 
   const handleSubmit = async (values: ContactFormData) => {
@@ -306,8 +330,8 @@ export default function Home() {
             </FormikStep>
 
             <FormikStep
-              label="Bank Accounts"
-              validationSchema={validationSchema2}
+              label='Bank Accounts'
+              validationSchema={validationSchemaSecondStep}
             >
               <div className="title-right-side">
                 <span>مرحله 2 از 3</span>
@@ -331,6 +355,7 @@ export default function Home() {
                     variant="outlined"
                     component={StyledTextField}
                     label="نام فروشنده به لاتین (برای حساب کاربری Bay)"
+
                   />
                 </div>
               </div>
@@ -434,11 +459,11 @@ export default function Home() {
                 </div>
               </div>
             </FormikStep>
-            {/* <FormikStep
-              label="Bank Accounts"
+            <FormikStep
+              label='Bank Accounts'
               validationSchema={formValidateFile}
             >
-              <div className="title-right-side">
+              <div className='title-right-side'>
                 <span>مرحله 3 از 3</span>
                 <span className="title">اطلاعات شخصی</span>
               </div>
@@ -456,7 +481,7 @@ export default function Home() {
                 />
               </div>
             </FormikStep>
-            <FormikStep label="test"></FormikStep> */}
+            <FormikStep label="test"></FormikStep> 
           </FormikStepper>
         </div>
         <div className="form-left-side">
@@ -519,7 +544,7 @@ export function FormikStepper({
             spacing={2}
           >
             {step > 0 ? (
-              <Grid item className="btn-back">
+              <Grid item className='btn-back'>
                 <Button
                   disabled={isSubmitting}
                   variant="contained"
@@ -530,7 +555,7 @@ export function FormikStepper({
                 </Button>
               </Grid>
             ) : null}
-            <Grid item className="confirm-btn">
+            <Grid item className='confirm-btn'>
               <Button
                 startIcon={
                   isSubmitting ? <CircularProgress size="1rem" /> : null
