@@ -154,7 +154,23 @@ export default function Home() {
     TelegramPhoneNumber: string()
       .required("شماره ی تلگرام فروشنده را به درستی وارد کنید")
       .matches(phoneRegExp, "شماره ی تلگرام فروشنده را به درستی وارد کنید"),
-
+  });
+  const validationSchemaSecondStep = object({
+    TelegramPhoneNumber: string()
+      .required("شماره ی تلگرام فروشنده را به درستی وارد کنید")
+      .matches(phoneRegExp, "شماره ی تلگرام فروشنده را به درستی وارد کنید"),
+    EbayVendorName: string()
+      .required("نام فروشنده را به درستی وارد کنید")
+      .matches(/^[a-z\s'&]*$/i, "نام فروشنده را به درستی وارد کنید"),
+    StoreEnglishName1: string(),
+    StoreEnglishName2: string(),
+    StoreEnglishName3: string(),
+    HasParticipant: string(),
+  });
+  const validationSchemaThirdStep = object({
+    TelegramPhoneNumber: string()
+      .required("شماره ی تلگرام فروشنده را به درستی وارد کنید")
+      .matches(phoneRegExp, "شماره ی تلگرام فروشنده را به درستی وارد کنید"),
     EbayVendorName: string(),
     StoreEnglishName1: string(),
     StoreEnglishName2: string(),
@@ -181,7 +197,7 @@ export default function Home() {
           <FormikStepper initialValues={initialValues} onSubmit={handleSubmit}>
             <FormikStep
               label='Personal Data'
-              validationSchema={validationSchema}
+              // validationSchema={validationSchema}
             >
               <div className='title-right-side'>
                 <span>مرحله 1 از 3</span>
@@ -295,7 +311,7 @@ export default function Home() {
 
             <FormikStep
               label='Bank Accounts'
-              validationSchema={validationSchema}
+              validationSchema={validationSchemaSecondStep}
             >
               <div className='title-right-side'>
                 <span>مرحله 2 از 3</span>
@@ -319,6 +335,14 @@ export default function Home() {
                     variant='outlined'
                     component={StyledTextField}
                     label='نام فروشنده به لاتین (برای حساب کاربری Bay)'
+                    onChange={(e) => aaa(e)}
+                    InputProps={
+                      {
+                        // onchange = () => {
+                        //   console.log(333);
+                        // },
+                      }
+                    }
                   />
                 </div>
               </div>
@@ -422,7 +446,10 @@ export default function Home() {
                 </div>
               </div>
             </FormikStep>
-            <FormikStep label='Bank Accounts' validationSchema={formValidateFile}>
+            <FormikStep
+              label='Bank Accounts'
+              validationSchema={formValidateFile}
+            >
               <div className='title-right-side'>
                 <span>مرحله 3 از 3</span>
                 <span className='title'>اطلاعات شخصی</span>
@@ -504,7 +531,7 @@ export function FormikStepper({
             spacing={2}
           >
             {step > 0 ? (
-              <Grid item className="btn-back">
+              <Grid item className='btn-back'>
                 <Button
                   disabled={isSubmitting}
                   variant='contained'
@@ -515,7 +542,7 @@ export function FormikStepper({
                 </Button>
               </Grid>
             ) : null}
-            <Grid item className="confirm-btn">
+            <Grid item className='confirm-btn'>
               <Button
                 startIcon={
                   isSubmitting ? <CircularProgress size='1rem' /> : null
