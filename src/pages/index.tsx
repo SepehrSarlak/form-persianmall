@@ -584,7 +584,7 @@ export default function Home() {
               validationSchema={validationSchemaThirdStep}
             >
               <div className="title-right-side">
-                <span>مرحله 3 از 3</span>
+                <span>مرحله 3 از 4</span>
                 <span className="title">اطلاعات</span>
               </div>
 
@@ -760,23 +760,21 @@ export default function Home() {
                 </div>
               </div>
             </FormikStep>
-            <FormikStep label="Bank Accounts">
-              <div className="file-parent">
-                <Field
-                  type="file"
-                  name="NationalCardPicture"
-                  accept="image/*"
-                />
-                <Field
-                  type="file"
-                  name="BirthCertificatePicture"
-                  accept="image/*"
-                  label="sadf"
-                />
-              </div>
-            </FormikStep>
 
-            <FormikStep label="test">
+            <FormikStep label="photos" validationSchema={formValidateFile}>
+              <div className="title-right-side">
+                <span>مرحله 4 از 4</span>
+                <span className="title">اطلاعات</span>
+              </div>
+              <div className="file-parent flex">
+                {/* <Field
+                    type="file"
+                    name="NationalCardPicture"
+                    accept="image/*"
+                  /> */}
+                <div className="fileLabel">انتخاب تصویر شناسنامه</div>
+                <FileUpload name="NationalCardPicture" fileRef={fileRef} />
+              </div>
               <div className="file-parent flex">
                 {/* <Field
                     type="file"
