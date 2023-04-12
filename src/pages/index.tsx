@@ -161,7 +161,7 @@ export default function Home() {
       .matches(phoneRegExp, "شماره ی تلگرام فروشنده را به درستی وارد کنید"),
     EbayVendorName: string()
       .required("نام فروشنده را به درستی وارد کنید")
-      .matches(/^[a-z\s'&]*$/i, "نام فروشنده را به درستی وارد کنید"),
+      .matches(/^[a-z-0-9\s'&]*$/i, "نام فروشنده را به لاتین وارد کنید"),
     StoreEnglishName1: string(),
     StoreEnglishName2: string(),
     StoreEnglishName3: string(),
@@ -335,7 +335,7 @@ export default function Home() {
                     variant='outlined'
                     component={StyledTextField}
                     label='نام فروشنده به لاتین (برای حساب کاربری Bay)'
-                    onChange={(e) => aaa(e)}
+                    onChange={(e) => console.log(3333)}
                     InputProps={
                       {
                         // onchange = () => {
