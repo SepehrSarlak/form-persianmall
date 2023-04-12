@@ -210,6 +210,7 @@ export default function Home() {
   //     .matches(phoneRegExp, "شماره ی تلگرام فروشنده را به درستی وارد کنید"),
   // });
 
+
   return (
     <div className='container'>
       <div className='container-form'>
@@ -250,8 +251,8 @@ export default function Home() {
                     name='PhoneNumber'
                     variant='outlined'
                     component={StyledTextField}
-                    label='شماره موبایل'
-                    className='input-left'
+                    label="شماره موبایل"
+                    className="input-left"
                   />
                 </div>
                 <div className='input mr'>
