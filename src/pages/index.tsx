@@ -319,9 +319,8 @@ export default function Home() {
               </div>
               <div className='row-input'>
                 <div className='input'>
-                  <Field
-                    fullWidth
-                    name='TelegramPhoneNumber'
+                  <input
+                    name='TelegramPhoneNumber'x
                     variant='outlined'
                     component={StyledTextField}
                     label='شماره ی تلگرام فروشنده *'
