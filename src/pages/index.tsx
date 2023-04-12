@@ -6,9 +6,16 @@ import {
   InputAdornment,
 } from "@material-ui/core";
 import axios from "axios";
-import { Field, Form, Formik, FormikConfig, FormikValues } from "formik";
+import {
+  Field,
+  Form,
+  Formik,
+  FormikConfig,
+  FormikValues,
+  useField,
+} from "formik";
 import { CheckboxWithLabel, TextField, RadioGroup } from "formik-material-ui";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { boolean, object, string } from "yup";
 
@@ -24,27 +31,21 @@ import * as Yup from "yup";
 //   //     return value && ["image/jpeg", "image/png"].includes(value.type);
 //   //   }),
 // });
-const formValidateFile = Yup.object().shape({
-  NationalCardPicture: Yup.mixed().required("asfd"),
-  BirthCertificatePicture: Yup.mixed().required("asfd"),
-  // image: Yup.mixed().required(),
-});
 
-const StyledTextField = withStyles({
-  root: {
-    "& label": {
-      transformOrigin: "top right",
-      right: 30,
-      left: "auto",
-      textAlign: "right",
-      minWidth: "150px",
-    },
-    "& legend": {
-      textAlign: "right",
-    },
-  },
-})(TextField);
+// const formValidateFile = Yup.object().shape({
+//   NationalCardPicture: Yup.mixed()
+//     .required('Image is required')
+//     .test('fileType', 'Invalid file type', (value) => {
+//       return ['image/jpeg', 'image/png'].includes(value.type);
+//     })
+//     .test('fileSize', 'File size too large', (value) => {
+//       return value.size <= 1024 * 1024 * 2; // 2MB
+//     }),
+// });
+
 export default function Home() {
+  const fileRef = useRef(null);
+
   const sleep = (time: any) => new Promise((acc) => setTimeout(acc, time));
 
   interface ContactFormData {
@@ -151,9 +152,6 @@ export default function Home() {
     Sheba: string()
       .required("شماره شبا را به درستی وارد کنید")
       .matches(/^(?=.{24}$)[0-9]*$/, "شماره شبا را به درستی وارد کنید"),
-    TelegramPhoneNumber: string()
-      .required("شماره ی تلگرام فروشنده را به درستی وارد کنید")
-      .matches(phoneRegExp, "شماره ی تلگرام فروشنده را به درستی وارد کنید"),
   });
   const validationSchemaSecondStep = object({
     TelegramPhoneNumber: string()
@@ -190,138 +188,248 @@ export default function Home() {
     }
   };
 
-  const validationSchema2 = object({
-    EbayVendorName: string(),
-    StoreEnglishName1: string(),
-    StoreEnglishName2: string(),
-    StoreEnglishName3: string(),
-    HasParticipant: string(),
-
-    ParticipantPhoneNumber1: string()
-      .required("شماره موبایل را به درستی وارد کنید")
-      .matches(phoneRegExp, "شماره موبایل را به درستی وارد کنید"),
-    ParticipantPhoneNumber2: string()
-      .required("شماره موبایل را به درستی وارد کنید")
-      .matches(phoneRegExp, "شماره موبایل را به درستی وارد کنید"),
-    TelegramPhoneNumber: string()
-      .required("شماره ی تلگرام فروشنده را به درستی وارد کنید")
-      .matches(phoneRegExp, "شماره ی تلگرام فروشنده را به درستی وارد کنید"),
+  const formValidateFile = Yup.object().shape({
+    NationalCardPicture: Yup.mixed()
+      .required("لطفا تصویر مدرک را آپلود کنید")
+      .test("is-file-too-big", "محدودیت حجم عکس 10 مگ", () => {
+        let valid = true;
+        const files = fileRef?.current?.files;
+        if (files) {
+          const fileArr = Array.from(files);
+          fileArr.forEach((file) => {
+            const size = file.size / 1024 / 1024;
+            if (size > 10) {
+              valid = false;
+            }
+          });
+        }
+        return valid;
+      })
+      .test(
+        "is-file-of-correct-type",
+        "فایل های مجاز :‌jpg , jpeg , png",
+        () => {
+          let valid = true;
+          const files = fileRef?.current?.files;
+          if (files) {
+            const fileArr = Array.from(files);
+            fileArr.forEach((file) => {
+              const type = file.type.split("/")[1];
+              const validTypes = ["jpeg", "png", "jpg"];
+              if (!validTypes.includes(type)) {
+                valid = false;
+              }
+            });
+          }
+          return valid;
+        }
+      ),
+    BirthCertificatePicture: Yup.mixed()
+      .required("لطفا تصویر مدرک را آپلود کنید")
+      .test("is-file-too-big", "محدودیت حجم عکس 10 مگ", () => {
+        let valid = true;
+        const files = fileRef?.current?.files;
+        if (files) {
+          const fileArr = Array.from(files);
+          fileArr.forEach((file) => {
+            const size = file.size / 1024 / 1024;
+            if (size > 10) {
+              valid = false;
+            }
+          });
+        }
+        return valid;
+      })
+      .test(
+        "is-file-of-correct-type",
+        "فایل های مجاز :‌jpg , jpeg , png",
+        () => {
+          let valid = true;
+          const files = fileRef?.current?.files;
+          if (files) {
+            const fileArr = Array.from(files);
+            fileArr.forEach((file) => {
+              const type = file.type.split("/")[1];
+              const validTypes = ["jpeg", "png", "jpg"];
+              if (!validTypes.includes(type)) {
+                valid = false;
+              }
+            });
+          }
+          return valid;
+        }
+      ),
   });
 
+  const FileUpload = ({ fileRef, ...props }) => {
+    const [field, meta] = useField(props);
+    return (
+      <>
+        <div className="uploadFile">
+          {/* <label htmlFor="files" className="fileLabel">
+            بارگذاری تصویر کارت ملی
+          </label> */}
+          <input
+            id="file"
+            ref={fileRef}
+            multiple={true}
+            type="file"
+            {...field}
+          />
+          {meta.touched && meta.error ? (
+            <div style={{ color: "red", paddingTop: "10px" }}>{meta.error}</div>
+          ) : null}
+        </div>
+      </>
+    );
+  };
+
+  const StyledTextField = withStyles({
+    root: {
+      "& label": {
+        transformOrigin: "top right",
+        right: 30,
+        left: "auto",
+        textAlign: "right",
+        minWidth: "150px",
+      },
+      "& legend": {
+        textAlign: "right",
+      },
+    },
+  })(TextField);
+
+  // const validationSchema2 = object({
+  //   EbayVendorName: string(),
+  //   StoreEnglishName1: string(),
+  //   StoreEnglishName2: string(),
+  //   StoreEnglishName3: string(),
+  //   HasParticipant: string(),
+
+  //   ParticipantPhoneNumber1: string()
+  //     .required("شماره موبایل را به درستی وارد کنید")
+  //     .matches(phoneRegExp, "شماره موبایل را به درستی وارد کنید"),
+  //   ParticipantPhoneNumber2: string()
+  //     .required("شماره موبایل را به درستی وارد کنید")
+  //     .matches(phoneRegExp, "شماره موبایل را به درستی وارد کنید"),
+  //   TelegramPhoneNumber: string()
+  //     .required("شماره ی تلگرام فروشنده را به درستی وارد کنید")
+  //     .matches(phoneRegExp, "شماره ی تلگرام فروشنده را به درستی وارد کنید"),
+  // });x
 
   return (
-    <div className='container'>
-      <div className='container-form'>
-        <div className='form-right-side'>
+    <div className="container">
+      <div className="container-form">
+        <div className="form-right-side">
           <FormikStepper initialValues={initialValues} onSubmit={handleSubmit}>
             <FormikStep
-              label='Personal Data'
-              validationSchema={validationSchema}
+              label="Personal Data"
+              // validationSchema={validationSchema}
             >
-              <div className='title-right-side'>
+              <div className="title-right-side">
                 <span>مرحله 1 از 3</span>
-                <span className='title'>اطلاعات شخصی</span>
+                <span className="title">اطلاعات شخصی</span>
               </div>
-              <div className='row-input'>
-                <div className='input'>
+              <div className="row-input">
+                <div className="input">
                   <Field
                     fullWidth
-                    name='FirstName'
-                    variant='outlined'
+                    name="FirstName"
+                    variant="outlined"
                     component={StyledTextField}
-                    label='نام'
+                    label="نام"
                   />
                 </div>
-                <div className='input mr'>
+                <div className="input mr">
                   <Field
                     fullWidth
-                    name='LastName'
-                    variant='outlined'
+                    name="LastName"
+                    variant="outlined"
                     component={StyledTextField}
-                    label='نام خانوادگی'
+                    label="نام خانوادگی"
                   />
                 </div>
               </div>
-              <div className='row-input'>
-                <div className='input'>
+              <div className="row-input">
+                <div className="input">
                   <Field
                     fullWidth
-                    name='PhoneNumber'
-                    variant='outlined'
+                    name="PhoneNumber"
+                    variant="outlined"
                     component={StyledTextField}
                     label="شماره موبایل"
                     className="input-left"
                   />
                 </div>
-                <div className='input mr'>
+                <div className="input mr">
                   <Field
                     fullWidth
-                    name='NationalCode'
-                    variant='outlined'
+                    name="NationalCode"
+                    variant="outlined"
                     component={StyledTextField}
-                    label='کد ملی'
-                    className='input-left'
+                    label="کد ملی"
+                    className="input-left"
                   />
                 </div>
               </div>
-              <div className='row-input'>
-                <div className='input'>
+              <div className="row-input">
+                <div className="input">
                   <Field
                     fullWidth
-                    name='PostalCode'
-                    variant='outlined'
+                    name="PostalCode"
+                    variant="outlined"
                     component={StyledTextField}
-                    label='کد پستی'
-                    className='input-left'
+                    label="کد پستی"
+                    className="input-left"
                   />
                 </div>
-                <div className='input mr' dir='rtl'>
+                <div className="input mr" dir="rtl">
                   <Field
                     fullWidth
-                    name='Email'
-                    variant='outlined'
-                    className='input-left'
+                    name="Email"
+                    variant="outlined"
+                    className="input-left"
                     component={StyledTextField}
-                    label='آدرس ایمیل'
-                  />
-                </div>
-              </div>
-              <div className='row-input'>
-                <div className='input'>
-                  <Field
-                    fullWidth
-                    name='Address'
-                    variant='outlined'
-                    component={StyledTextField}
-                    label='آدرس'
-                  />
-                </div>
-                <div className='input mr'>
-                  <Field
-                    direction='rtl'
-                    fullWidth
-                    name='BankName'
-                    variant='outlined'
-                    component={StyledTextField}
-                    label='نام بانک'
+                    label="آدرس ایمیل"
                   />
                 </div>
               </div>
-              <div className='special-input'>
-                <div className='row-input'>
-                  <div className='input'>
+              <div className="row-input">
+                <div className="input">
+                  <Field
+                    fullWidth
+                    name="Address"
+                    variant="outlined"
+                    component={StyledTextField}
+                    label="آدرس"
+                  />
+                </div>
+                <div className="input mr">
+                  <Field
+                    direction="rtl"
+                    fullWidth
+                    name="BankName"
+                    variant="outlined"
+                    component={StyledTextField}
+                    label="نام بانک"
+                  />
+                </div>
+              </div>
+              <div className="special-input">
+                <div className="row-input">
+                  <div className="input">
                     <Field
-                      label='شماره شبا بانکی'
-                      className='input-left'
-                      helperText='حساب باید به نام طرف قرارداد باشد'
+                      label="شماره شبا بانکی"
+                      className="input-left"
+                      helperText="حساب باید به نام طرف قرارداد باشد"
                       fullWidth
                       InputProps={{
                         endAdornment: (
-                          <InputAdornment position='end'>IR</InputAdornment>
+                          <InputAdornment position="end">IR</InputAdornment>
                         ),
                       }}
-                      name='Sheba'
-                      variant='outlined'
+                      name="Sheba"
+                      variant="outlined"
                       component={StyledTextField}
                     />
                   </div>
@@ -330,166 +438,174 @@ export default function Home() {
             </FormikStep>
 
             <FormikStep
-              label='Bank Accounts'
-              validationSchema={validationSchemaSecondStep}
+              label="Bank Accounts"
+              // validationSchema={validationSchemaSecondStep}
             >
-              <div className='title-right-side'>
+              <div className="title-right-side">
                 <span>مرحله 2 از 3</span>
-                <span className='title'>اطلاعات شخصی</span>
+                <span className="title">اطلاعات شخصی</span>
               </div>
-              <div className='row-input'>
-                <div className='input'>
+              <div className="row-input">
+                <div className="input">
                   <Field
                     fullWidth
-                    name='TelegramPhoneNumber'
-                    variant='outlined'
+                    name="TelegramPhoneNumber"
+                    variant="outlined"
                     component={StyledTextField}
-                    label='شماره ی تلگرام فروشنده *'
+                    label="شماره ی تلگرام فروشنده *"
                     // onchange={(e) => console.log(e.target.value)}
                   />
                 </div>
-                <div className='input mr'>
+                <div className="input mr">
                   <Field
                     fullWidth
-                    name='EbayVendorName'
-                    variant='outlined'
+                    name="EbayVendorName"
+                    variant="outlined"
                     component={StyledTextField}
-                    label='نام فروشنده به لاتین (برای حساب کاربری Bay)'
+                    label="نام فروشنده به لاتین (برای حساب کاربری Bay)"
                   />
                 </div>
               </div>
-              <div className='flex-col text-right'>
-                <div className='text-right'>
+              <div className="flex-col text-right">
+                <div className="text-right">
                   نام مورد نظر برای فروشگاه به لاتین (لطفا بنا به الویت 3 نام را
                   انتخاب کنید)
                 </div>
-                <div className='text-center-align flex-between mt-3'>
-                  <div className='input'>
+                <div className="text-center-align flex-between mt-3">
+                  <div className="input">
                     <Field
                       fullWidth
-                      name='StoreEnglishName1'
-                      variant='outlined'
+                      name="StoreEnglishName1"
+                      variant="outlined"
                       component={StyledTextField}
                     />
                   </div>
-                  <div className='input mr'>
+                  <div className="input mr">
                     <Field
                       fullWidth
-                      name='StoreEnglishName2'
-                      variant='outlined'
+                      name="StoreEnglishName2"
+                      variant="outlined"
                       component={StyledTextField}
                     />
                   </div>
-                  <div className='input mr'>
+                  <div className="input mr">
                     <Field
                       fullWidth
-                      name='StoreEnglishName3'
-                      variant='outlined'
+                      name="StoreEnglishName3"
+                      variant="outlined"
                       component={StyledTextField}
                     />
                   </div>
                 </div>
               </div>
-              <div className='text-center-align'>
-                <div className=''>آیا شریک دارید؟</div>
+              <div className="text-center-align">
+                <div className="">آیا شریک دارید؟</div>
 
                 <div
-                  className='input-radio mr'
-                  role='group'
-                  aria-labelledby='my-radio-group'
+                  className="input-radio mr"
+                  role="group"
+                  aria-labelledby="my-radio-group"
                 >
-                  <label className='text-center-align'>
-                    <Field type='radio' name='HasParticipant' value='true' />
+                  <label className="text-center-align">
+                    <Field type="radio" name="HasParticipant" value="true" />
                     بله
                   </label>
-                  <label className='text-center-align mr'>
+                  <label className="text-center-align mr">
                     <Field
-                      type='radio'
-                      name='HasParticipant'
-                      value='false'
-                      variant='outlined'
+                      type="radio"
+                      name="HasParticipant"
+                      value="false"
+                      variant="outlined"
                     />
                     خیر
                   </label>
                 </div>
               </div>
 
-              <div className='mt-3'>
+              <div className="mt-3">
                 <span>در صورت داشتن شریک لطفا اطلاعات زیر را تکمیل کنید</span>
-                <div className='row-input my-3'>
-                  <div className='input'>
+                <div className="row-input my-3">
+                  <div className="input">
                     <Field
                       fullWidth
-                      name='ParticipantFullName1'
-                      variant='outlined'
+                      name="ParticipantFullName1"
+                      variant="outlined"
                       component={StyledTextField}
-                      label='نام و نام خانوادگی شریک اول'
+                      label="نام و نام خانوادگی شریک اول"
                     />
                   </div>
-                  <div className='input mr'>
+                  <div className="input mr">
                     <Field
                       fullWidth
-                      name='ParticipantPhoneNumber1'
-                      variant='outlined'
+                      name="ParticipantPhoneNumber1"
+                      variant="outlined"
                       component={StyledTextField}
-                      label='شماره موبایل'
+                      label="شماره موبایل"
                     />
                   </div>
                 </div>
-                <div className='row-input'>
-                  <div className='input'>
+                <div className="row-input">
+                  <div className="input">
                     <Field
                       fullWidth
-                      name='ParticipantFullName2'
-                      variant='outlined'
+                      name="ParticipantFullName2"
+                      variant="outlined"
                       component={StyledTextField}
-                      label='نام و نام خانوادگی شریک دوم'
+                      label="نام و نام خانوادگی شریک دوم"
                     />
                   </div>
-                  <div className='input mr'>
+                  <div className="input mr">
                     <Field
                       fullWidth
-                      name='ParticipantPhoneNumber2'
-                      variant='outlined'
+                      name="ParticipantPhoneNumber2"
+                      variant="outlined"
                       component={StyledTextField}
-                      label='شماره موبایل'
+                      label="شماره موبایل"
                     />
                   </div>
                 </div>
               </div>
             </FormikStep>
             <FormikStep
-              label='Bank Accounts'
+              label="Bank Accounts"
               validationSchema={formValidateFile}
             >
-              <div className='title-right-side'>
+              <div className="title-right-side">
                 <span>مرحله 3 از 3</span>
-                <span className='title'>اطلاعات شخصی</span>
+                <span className="title">اطلاعات شخصی</span>
               </div>
-              <div className='file-parent'>
-                <Field
-                  type='file'
-                  name='NationalCardPicture'
-                  accept='image/*'
-                />
-                <Field
-                  type='file'
-                  name='BirthCertificatePicture'
-                  accept='image/*'
-                  label='sadf'
-                />
+       <div>
+       <div className="file-parent flex">
+                {/* <Field
+                    type="file"
+                    name="NationalCardPicture"
+                    accept="image/*"
+                  /> */}
+                  <div className="fileLabel">انتخاب تصویر کارت ملی</div>
+                <FileUpload name="NationalCardPicture" fileRef={fileRef} />
               </div>
+              <div className="file-parent flex">
+                {/* <Field
+                    type="file"
+                    name="NationalCardPicture"
+                    accept="image/*"
+                  /> */}
+                                    <div className="fileLabel">انتخاب تصویر شناسنامه</div>
+                <FileUpload name="BirthCertificatePicture" fileRef={fileRef} />
+              </div>
+       </div>
             </FormikStep>
-            <FormikStep label='test'></FormikStep>
+
+            <FormikStep label="test"></FormikStep>
           </FormikStepper>
         </div>
-        <div className='form-left-side'>
+        <div className="form-left-side">
           <span>
             پاساژ یک مرکز خرید و فروش آنلاین پوشاک و آرایشی است که خدمات خود را
             به صورت رایگان (بدون کارمزد) ارائه می نماید. هم اکنون بیش از 15,000
             فروشگاه از سراسر ایران در حال فعالیت در پاساژ می باشند.
           </span>
-          <div className='logo'></div>
+          <div className="logo"></div>
         </div>
       </div>
     </div>
@@ -534,35 +650,35 @@ export function FormikStepper({
       }}
     >
       {({ isSubmitting }) => (
-        <Form autoComplete='off'>
+        <Form autoComplete="off">
           {currentChild}
           <Grid
             container
-            direction='row-reverse'
-            justifyContent='flex-end'
+            direction="row-reverse"
+            justifyContent="flex-end"
             spacing={2}
           >
             {step > 0 ? (
-              <Grid item className='btn-back'>
+              <Grid item className="btn-back">
                 <Button
                   disabled={isSubmitting}
-                  variant='contained'
-                  color='primary'
+                  variant="text"
+                  color="inherit"
                   onClick={() => setStep((s) => s - 1)}
                 >
                   مرحله قبل
                 </Button>
               </Grid>
             ) : null}
-            <Grid item className='confirm-btn'>
+            <Grid item className="confirm-btn">
               <Button
                 startIcon={
-                  isSubmitting ? <CircularProgress size='1rem' /> : null
+                  isSubmitting ? <CircularProgress size="1rem" /> : null
                 }
                 disabled={isSubmitting}
-                variant='contained'
-                color='primary'
-                type='submit'
+                variant="contained"
+                color="primary"
+                type="submit"
               >
                 {isSubmitting ? "ثبت" : isLastStep() ? "ثبت" : "مرحله بعد"}
               </Button>
