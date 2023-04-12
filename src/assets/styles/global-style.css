@@ -47,7 +47,7 @@ body {
 
 .MuiFormLabel-root,
 .MuiFormHelperText-root,
-.MuiButton-root {
+.MuiButton-root, .MuiInputBase-root {
   font-family: "MyFont", sans-serif !important;
 }
 .container {
