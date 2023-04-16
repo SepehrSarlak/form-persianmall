@@ -276,367 +276,195 @@ export default function Home() {
   })(TextField);
 
   return (
-    <div className="container">
-      <div className="container-form">
-        <div className="form-right-side">
-          <FormikStepper initialValues={initialValues} onSubmit={handleSubmit}>
-            <FormikStep label="Personal Data" validationSchema={validationSchema}>
-              <div className="title-right-side">
-                <span>مرحله 1 از 3</span>
-                <span className="title">اطلاعات شخصی</span>
-              </div>
-              <div className="row-input">
-                <div className="input">
-                  <Field
-                    fullWidth
-                    name="FirstName"
-                    variant="outlined"
-                    component={StyledTextField}
-                    label="نام"
-                  />
+    <div className='container'>
+      <div className='container-form'>
+        <div className='form-right-side'>
+          {!done == true ? (
+            <FormikStepper
+              initialValues={initialValues}
+              onSubmit={handleSubmit}
+            >
+              <FormikStep
+                label='Personal Data'
+                // validationSchema={validationSchema}
+              >
+                <div className='title-right-side'>
+                  <span>مرحله 1 از 3</span>
+                  <span className='title'>اطلاعات شخصی</span>
                 </div>
-                <div className="input mr">
-                  <Field
-                    fullWidth
-                    name="LastName"
-                    variant="outlined"
-                    component={StyledTextField}
-                    label="نام خانوادگی"
-                  />
-                </div>
-              </div>
-              <div className="row-input">
-                <div className="input">
-                  <Field
-                    type="number"
-                    fullWidth
-                    name="PhoneNumber"
-                    variant="outlined"
-                    component={StyledTextField}
-                    label="شماره موبایل"
-                    className="input-left"
-                  />
-                </div>
-                <div className="input mr">
-                  <Field
-                    fullWidth
-                    name="NationalCode"
-                    variant="outlined"
-                    component={StyledTextField}
-                    label="کد ملی"
-                    className="input-left"
-                  />
-                </div>
-              </div>
-              <div className="row-input">
-                <div className="input">
-                  <Field
-                    fullWidth
-                    name="PostalCode"
-                    variant="outlined"
-                    component={StyledTextField}
-                    label="کد پستی"
-                    className="input-left"
-                  />
-                </div>
-                <div className="input mr" dir="rtl">
-                  <Field
-                    fullWidth
-                    name="Email"
-                    variant="outlined"
-                    className="input-left"
-                    component={StyledTextField}
-                    label="آدرس ایمیل"
-                  />
-                </div>
-              </div>
-              <div className="row-input">
-                <div className="input">
-                  <Field
-                    fullWidth
-                    name="Address"
-                    variant="outlined"
-                    component={StyledTextField}
-                    label="آدرس"
-                  />
-                </div>
-                <div className="input mr">
-                  <Field
-                    direction="rtl"
-                    fullWidth
-                    name="BankName"
-                    variant="outlined"
-                    component={StyledTextField}
-                    label="نام بانک"
-                  />
-                </div>
-              </div>
-              <div className="special-input">
-                <div className="row-input">
-                  <div className="input">
+                <div className='row-input'>
+                  <div className='input'>
                     <Field
-                      label="شماره شبا بانکی"
-                      className="input-left"
-                      helperText="حساب باید به نام طرف قرارداد باشد"
                       fullWidth
-                      InputProps={{
-                        endAdornment: (
-                          <InputAdornment position="end">IR</InputAdornment>
-                        ),
-                      }}
-                      name="Sheba"
-                      variant="outlined"
+                      name='FirstName'
+                      variant='outlined'
                       component={StyledTextField}
+                      label='نام'
+                    />
+                  </div>
+                  <div className='input mr'>
+                    <Field
+                      fullWidth
+                      name='LastName'
+                      variant='outlined'
+                      component={StyledTextField}
+                      label='نام خانوادگی'
                     />
                   </div>
                 </div>
-              </div>
-            </FormikStep>
-            <FormikStep label="Bank Accounts">
-              <div className="title-right-side">
-                <span>مرحله 2 از 3</span>
-                <span className="title">اطلاعات شخصی</span>
-              </div>
-              <div className="row-input">
-                <div className="input">
-                  <Field
-                    fullWidth
-                    name="TelegramPhoneNumber"
-                    variant="outlined"
-                    component={StyledTextField}
-                    label="شماره ی تلگرام فروشنده *"
-                    // onchange={(e) => console.log(e.target.value)}
-                  />
-                </div>
-                <div className="input mr">
-                  <Field
-                    fullWidth
-                    name="EbayVendorName"
-                    variant="outlined"
-                    component={StyledTextField}
-                    label="نام فروشنده به لاتین (برای حساب کاربری Bay)"
-                  />
-                </div>
-              </div>
-              <div className="flex-col text-right">
-                <div className="text-right">
-                  نام مورد نظر برای فروشگاه به لاتین (لطفا بنا به الویت 3 نام را
-                  انتخاب کنید)
-                </div>
-                <div className="text-center-align flex-between mt-3">
-                  <div className="input">
+                <div className='row-input'>
+                  <div className='input'>
                     <Field
+                      type='number'
                       fullWidth
-                      name="StoreEnglishName1"
-                      variant="outlined"
+                      name='PhoneNumber'
+                      variant='outlined'
                       component={StyledTextField}
+                      label='شماره موبایل'
+                      className='input-left'
                     />
                   </div>
-
-                  <div className="input mr w-30">
+                  <div className='input mr'>
                     <Field
                       fullWidth
-                      name="StoreEnglishName2"
-                      variant="outlined"
+                      name='NationalCode'
+                      variant='outlined'
                       component={StyledTextField}
-                    />
-                  </div>
-                  <div className="input mr w-30">
-                    <Field
-                      fullWidth
-                      name="StoreEnglishName3"
-                      variant="outlined"
-                      component={StyledTextField}
+                      label='کد ملی'
+                      className='input-left'
                     />
                   </div>
                 </div>
-              </div>
-              <div className="text-center-align">
-                <div className="">آیا شریک دارید؟</div>
+                <div className='row-input'>
+                  <div className='input'>
+                    <Field
+                      fullWidth
+                      name='PostalCode'
+                      variant='outlined'
+                      component={StyledTextField}
+                      label='کد پستی'
+                      className='input-left'
+                    />
+                  </div>
+                  <div className='input mr' dir='rtl'>
+                    <Field
+                      fullWidth
+                      name='Email'
+                      variant='outlined'
+                      className='input-left'
+                      component={StyledTextField}
+                      label='آدرس ایمیل'
+                    />
+                  </div>
+                </div>
+                <div className='row-input'>
+                  <div className='input'>
+                    <Field
+                      fullWidth
+                      name='Address'
+                      variant='outlined'
+                      component={StyledTextField}
+                      label='آدرس'
+                    />
+                  </div>
+                  <div className='input mr'>
+                    <Field
+                      direction='rtl'
+                      fullWidth
+                      name='BankName'
+                      variant='outlined'
+                      component={StyledTextField}
+                      label='نام بانک'
+                    />
+                  </div>
+                </div>
+                <div className='special-input'>
+                  <div className='row-input'>
+                    <div className='input'>
+                      <Field
+                        label='شماره شبا بانکی'
+                        className='input-left'
+                        helperText='حساب باید به نام طرف قرارداد باشد'
+                        fullWidth
+                        InputProps={{
+                          endAdornment: (
+                            <InputAdornment position='end'>IR</InputAdornment>
+                          ),
+                        }}
+                        name='Sheba'
+                        variant='outlined'
+                        component={StyledTextField}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </FormikStep>
 
-                <div
-                  className="input-radio mr"
-                  role="group"
-                  aria-labelledby="my-radio-group">
-                  <div className='title-right-side'>
-                    <span>مرحله 1 از 3</span>
-                    <span className='title'>اطلاعات شخصی</span>
+              <FormikStep label='Bank Accounts'>
+                <div className='title-right-side'>
+                  <span>مرحله 2 از 3</span>
+                  <span className='title'>اطلاعات شخصی</span>
+                </div>
+                <div className='row-input'>
+                  <div className='input'>
+                    <Field
+                      fullWidth
+                      name='TelegramPhoneNumber'
+                      variant='outlined'
+                      component={StyledTextField}
+                      label='شماره ی تلگرام فروشنده *'
+                    />
                   </div>
-                  <div className='row-input'>
+                  <div className='input mr'>
+                    <Field
+                      fullWidth
+                      name='EbayVendorName'
+                      variant='outlined'
+                      component={StyledTextField}
+                      label='نام فروشنده به لاتین (برای حساب کاربری Bay)'
+                    />
+                  </div>
+                </div>
+                <div className='flex-col text-right mt-3'>
+                  <div className='text-right'>
+                    نام مورد نظر برای فروشگاه به لاتین (لطفا بنا به الویت 3 نام
+                    را انتخاب کنید)
+                  </div>
+                  <div className='text-center-align flex-between mt-2'>
                     <div className='input'>
                       <Field
                         fullWidth
-                        name='FirstName'
+                        name='StoreEnglishName1'
                         variant='outlined'
                         component={StyledTextField}
-                        label='نام'
                       />
                     </div>
-                    <div className='input mr'>
-                      <Field
-                        fullWidth
-                        name='LastName'
-                        variant='outlined'
-                        component={StyledTextField}
-                        label='نام خانوادگی'
-                      />
-                    </div>
-                  </div>
-                  <div className='row-input'>
-                    <div className='input'>
-                      <Field
-                        fullWidth
-                        name='PhoneNumber'
-                        variant='outlined'
-                        component={StyledTextField}
-                        type='number'
-                        label='شماره موبایل'
-                        className='input-left'
-                      />
-                    </div>
-                    <div className='input mr'>
-                      <Field
-                        fullWidth
-                        name='NationalCode'
-                        variant='outlined'
-                        type='number'
-                        component={StyledTextField}
-                        label='کد ملی'
-                        className='input-left'
-                      />
-                    </div>
-                  </div>
-                  <div className='row-input'>
-                    <div className='input'>
-                      <Field
-                        fullWidth
-                        name='PostalCode'
-                        variant='outlined'
-                        type='number'
-                        component={StyledTextField}
-                        label='کد پستی'
-                        className='input-left'
-                      />
-                    </div>
-                    <div className='input mr' dir='rtl'>
-                      <Field
-                        fullWidth
-                        name='Email'
-                        variant='outlined'
-                        className='input-left'
-                        component={StyledTextField}
-                        label='آدرس ایمیل'
-                      />
-                    </div>
-                  </div>
-                  <div className='row-input'>
-                    <div className='input'>
-                      <Field
-                        fullWidth
-                        name='Address'
-                        variant='outlined'
-                        component={StyledTextField}
-                        label='آدرس'
-                      />
-                    </div>
-                    <div className='input mr'>
-                      <Field
-                        direction='rtl'
-                        fullWidth
-                        name='BankName'
-                        variant='outlined'
-                        component={StyledTextField}
-                        label='نام بانک'
-                      />
-                    </div>
-                  </div>
-                  <div className='special-input'>
-                    <div className='row-input'>
-                      <div className='input'>
-                        <Field
-                          type='number'
-                          label='شماره شبا بانکی'
-                          className='input-left'
-                          helperText='حساب باید به نام طرف قرارداد باشد'
-                          fullWidth
-                          InputProps={{
-                            endAdornment: (
-                              <InputAdornment position='end'>IR</InputAdornment>
-                            ),
-                          }}
-                          name='Sheba'
-                          variant='outlined'
-                          component={StyledTextField}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </FormikStep>
-                <FormikStep
-                  label='Bank Accounts'
-                  // validationSchema={validationSchemaSecondStep}
-                >
-                  <div className='title-right-side'>
-                    <span>مرحله 2 از 3</span>
-                    <span className='title'>اطلاعات شخصی</span>
-                  </div>
-                  <div className='row-input'>
-                    <div className='input'>
-                      <Field
-                        fullWidth
-                        name='TelegramPhoneNumber'
-                        variant='outlined'
-                        type='number'
-                        component={StyledTextField}
-                        label='شماره ی تلگرام فروشنده *'
-                      />
-                    </div>
-                    <div className='input mr'>
-                      <Field
-                        fullWidth
-                        name='EbayVendorName'
-                        variant='outlined'
-                        component={StyledTextField}
-                        label='نام فروشنده به لاتین (برای حساب کاربری Bay)'
-                      />
-                    </div>
-                  </div>
-                  <div className='flex-col text-right'>
-                    <div className='text-right'>
-                      نام مورد نظر برای فروشگاه به لاتین (لطفا بنا به الویت 3
-                      نام را انتخاب کنید)
-                    </div>
-                    <div className='text-center-align flex-between mt-3'>
-                      <div className='input'>
-                        <Field
-                          fullWidth
-                          name='StoreEnglishName1'
-                          variant='outlined'
-                          component={StyledTextField}
-                        />
-                      </div>
 
-                      <div className='input mr w-30'>
-                        <Field
-                          fullWidth
-                          name='StoreEnglishName2'
-                          variant='outlined'
-                          component={StyledTextField}
-                        />
-                      </div>
-                      <div className='input mr w-30'>
-                        <Field
-                          fullWidth
-                          name='StoreEnglishName3'
-                          variant='outlined'
-                          component={StyledTextField}
-                        />
-                      </div>
+                    <div className='input mr w-30'>
+                      <Field
+                        fullWidth
+                        name='StoreEnglishName2'
+                        variant='outlined'
+                        component={StyledTextField}
+                      />
+                    </div>
+                    <div className='input mr w-30'>
+                      <Field
+                        fullWidth
+                        name='StoreEnglishName3'
+                        variant='outlined'
+                        component={StyledTextField}
+                      />
                     </div>
                   </div>
-                  <div className='text-center-align'>
-                    <div className=''>آیا شریک دارید؟</div>
-
+                </div>
+                <div className='text-center-align mt-3'>
+                  <div className=''>آیا شریک دارید؟</div>
+                  <div
+                    className='input-radio mr'
+                    role='group'
+                    aria-labelledby='my-radio-group'
+                  >
                     <div
                       className='input-radio mr'
                       role='group'
@@ -661,266 +489,263 @@ export default function Home() {
                       </label>
                     </div>
                   </div>
+                </div>
+                <div className='mt-3'>
+                  <span>در صورت داشتن شریک لطفا اطلاعات زیر را تکمیل کنید</span>
+                  <div className='row-input my-2'>
+                    <div className='input'>
+                      <Field
+                        fullWidth
+                        name='ParticipantFullName1'
+                        variant='outlined'
+                        component={StyledTextField}
+                        label='نام و نام خانوادگی شریک اول'
+                      />
+                    </div>
+                    <div className='input mr'>
+                      <Field
+                        fullWidth
+                        name='ParticipantPhoneNumber1'
+                        variant='outlined'
+                        type='number'
+                        component={StyledTextField}
+                        label='شماره موبایل'
+                      />
+                    </div>
+                  </div>
+                  <div className='row-input'>
+                    <div className='input'>
+                      <Field
+                        fullWidth
+                        name='ParticipantFullName2'
+                        variant='outlined'
+                        component={StyledTextField}
+                        label='نام و نام خانوادگی شریک دوم'
+                      />
+                    </div>
+                    <div className='input mr'>
+                      <Field
+                        fullWidth
+                        name='ParticipantPhoneNumber2'
+                        type='number'
+                        variant='outlined'
+                        component={StyledTextField}
+                        label='شماره موبایل'
+                      />
+                    </div>
+                  </div>
+                </div>
+              </FormikStep>
 
-                  <div className='mt-3'>
-                    <span>
-                      در صورت داشتن شریک لطفا اطلاعات زیر را تکمیل کنید
-                    </span>
+              <FormikStep
+                label='Bank Accounts'
+                // validationSchema={validationSchemaThirdStep}
+              >
+                <div className='title-right-side'>
+                  <span>مرحله 3 از 4</span>
+                  <span className='title'>اطلاعات</span>
+                </div>
+                <div className='form-step-third'>
+                  <div>
+                    <div className=''>
+                      الف) در کدام طبقه میخواهید فروشگاه اینترنتی خود را راه
+                      اندازی کنید؟ (لطفا فقط یک مورد را انتخاب کنید)
+                    </div>
+
+                    <div className='mt-2'>
+                      <div
+                        className='input-radio'
+                        role='group'
+                        aria-labelledby='my-radio-group'
+                      >
+                        <label className='text-center-align'>
+                          <Field
+                            type='radio'
+                            name='SelectedSalesBranch'
+                            value='1'
+                          />
+                          طبقه ی اول: محصولات مرتبط با نوزاد، کودک و نوجوان
+                          (شامل پوشاک و سایر موارد)
+                        </label>
+                        <label className='text-center-align'>
+                          <Field
+                            type='radio'
+                            name='SelectedSalesBranch'
+                            value='2'
+                            variant='outlined'
+                          />
+                          طبقه ی دوم: محصولات مرتبط با بانوان (شامل پوشاک و سایر
+                          موارد)
+                        </label>
+                        <label className='text-center-align'>
+                          <Field
+                            type='radio'
+                            name='SelectedSalesBranch'
+                            value='3'
+                            variant='outlined'
+                          />
+                          طبقه ی سوم: محصولات مرتبط با آقایان (شامل پوشاک و سایر
+                          موارد)
+                        </label>
+                        <label className='text-center-align'>
+                          <Field
+                            type='radio'
+                            name='SelectedSalesBranch'
+                            value='4'
+                            variant='outlined'
+                          />
+                          طبقه ی سوم: محصولات مرتبط با آقایان (شامل پوشاک و سایر
+                          موارد)
+                        </label>
+                        <label className='text-center-align'>
+                          <Field
+                            type='radio'
+                            name='SelectedSalesBranch'
+                            value='5'
+                            variant='outlined'
+                          />
+                          طبقه ی چهارم: محصولات اکسسوری، هنری و صنایع دستی (بجز
+                          پوشاک)
+                        </label>
+                        <label className='text-center-align'>
+                          <Field
+                            type='radio'
+                            name='SelectedSalesBranch'
+                            value='0'
+                            variant='outlined'
+                          />
+                          مایلم پرشین مال با توجه به نیاز بازار ایرانیان خارج از
+                          کشور، طبقه ی فروشگاه من را مشخص کند.
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div className='mt-3 w-full my-3'>
+                    <div>
+                      ب) با توجه به طبقه ی انتخاب شده، مایل به فروش چه محصولی
+                      هستید؟
+                    </div>
                     <div className='row-input my-3'>
-                      <div className='input'>
+                      <div className='input w-30'>
                         <Field
                           fullWidth
-                          name='ParticipantFullName1'
+                          name='ProductName1'
                           variant='outlined'
                           component={StyledTextField}
-                          label='نام و نام خانوادگی شریک اول'
+                          label='الویت اول'
                         />
                       </div>
-                      <div className='input mr'>
+                      <div className='input mr w-30'>
                         <Field
                           fullWidth
-                          name='ParticipantPhoneNumber1'
+                          name='ProductName2'
                           variant='outlined'
-                          type='number'
                           component={StyledTextField}
-                          label='شماره موبایل'
+                          label='الویت دوم'
+                        />
+                      </div>
+                    </div>
+                    <div className='row-input my-3'>
+                      <div className='input w-30'>
+                        <Field
+                          fullWidth
+                          name='ProductName3'
+                          variant='outlined'
+                          component={StyledTextField}
+                          label='الویت سوم'
+                        />
+                      </div>
+                      <div className='input mr w-30'>
+                        <Field
+                          fullWidth
+                          name='ProductName4'
+                          variant='outlined'
+                          component={StyledTextField}
+                          label='الویت چهارم'
                         />
                       </div>
                     </div>
                     <div className='row-input'>
-                      <div className='input'>
+                      <div className='input w-30'>
                         <Field
                           fullWidth
-                          name='ParticipantFullName2'
+                          name='ProductName5'
                           variant='outlined'
                           component={StyledTextField}
-                          label='نام و نام خانوادگی شریک دوم'
+                          label='الویت پنجم'
                         />
                       </div>
-                      <div className='input mr'>
+                      <div className='input mr w-30'>
                         <Field
                           fullWidth
-                          name='ParticipantPhoneNumber2'
-                          type='number'
+                          name='ProductName6'
                           variant='outlined'
                           component={StyledTextField}
-                          label='شماره موبایل'
+                          label='الویت ششم'
+                        />
+                      </div>
+                    </div>
+                    <div className='text-center-align flex-between mt-3 flex-wrap'>
+                      <div className='input w-30'>
+                        <Field
+                          fullWidth
+                          name='ProductName7'
+                          variant='outlined'
+                          component={StyledTextField}
+                          label='الویت هفتم'
+                        />
+                      </div>
+                      <div className='input mr w-30'>
+                        <Field
+                          fullWidth
+                          name='ProductName8'
+                          variant='outlined'
+                          component={StyledTextField}
+                          label='الویت هشتم'
+                        />
+                      </div>
+                      <div className='input mr w-30'>
+                        <Field
+                          fullWidth
+                          name='ProductName9'
+                          variant='outlined'
+                          component={StyledTextField}
+                          label='الویت نهم'
                         />
                       </div>
                     </div>
                   </div>
-                </FormikStep>
-                <FormikStep
-                  label='Bank Accounts'
-                  // validationSchema={validationSchemaThirdStep}
-                >
-                  <div className='title-right-side'>
-                    <span>مرحله 3 از 4</span>
-                    <span className='title'>اطلاعات</span>
-                  </div>
+                </div>
+              </FormikStep>
 
-                  <div className='form-step-third'>
-                    <div>
-                      <div className=''>
-                        الف) در کدام طبقه میخواهید فروشگاه اینترنتی خود را راه
-                        اندازی کنید؟ (لطفا فقط یک مورد را انتخاب کنید)
-                      </div>
-
-                      <div className='mt-2'>
-                        <div
-                          className='input-radio'
-                          role='group'
-                          aria-labelledby='my-radio-group'
-                        >
-                          <label className='text-center-align'>
-                            <Field
-                              type='radio'
-                              name='SelectedSalesBranch'
-                              value='1'
-                            />
-                            طبقه ی اول: محصولات مرتبط با نوزاد، کودک و نوجوان
-                            (شامل پوشاک و سایر موارد)
-                          </label>
-                          <label className='text-center-align'>
-                            <Field
-                              type='radio'
-                              name='SelectedSalesBranch'
-                              value='2'
-                              variant='outlined'
-                            />
-                            طبقه ی دوم: محصولات مرتبط با بانوان (شامل پوشاک و
-                            سایر موارد)
-                          </label>
-                          <label className='text-center-align'>
-                            <Field
-                              type='radio'
-                              name='SelectedSalesBranch'
-                              value='3'
-                              variant='outlined'
-                            />
-                            طبقه ی سوم: محصولات مرتبط با آقایان (شامل پوشاک و
-                            سایر موارد)
-                          </label>
-                          <label className='text-center-align'>
-                            <Field
-                              type='radio'
-                              name='SelectedSalesBranch'
-                              value='4'
-                              variant='outlined'
-                            />
-                            طبقه ی سوم: محصولات مرتبط با آقایان (شامل پوشاک و
-                            سایر موارد)
-                          </label>
-                          <label className='text-center-align'>
-                            <Field
-                              type='radio'
-                              name='SelectedSalesBranch'
-                              value='5'
-                              variant='outlined'
-                            />
-                            طبقه ی چهارم: محصولات اکسسوری، هنری و صنایع دستی
-                            (بجز پوشاک)
-                          </label>
-                          <label className='text-center-align'>
-                            <Field
-                              type='radio'
-                              name='SelectedSalesBranch'
-                              value='0'
-                              variant='outlined'
-                            />
-                            مایلم پرشین مال با توجه به نیاز بازار ایرانیان خارج
-                            از کشور، طبقه ی فروشگاه من را مشخص کند.
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-                    <div className='mt-3 w-full my-3'>
-                      <div>
-                        ب) با توجه به طبقه ی انتخاب شده، مایل به فروش چه محصولی
-                        هستید؟
-                      </div>
-                      <div className='row-input my-3'>
-                        <div className='input w-30'>
-                          <Field
-                            fullWidth
-                            name='ProductName1'
-                            variant='outlined'
-                            component={StyledTextField}
-                            label='الویت اول'
-                          />
-                        </div>
-                        <div className='input mr w-30'>
-                          <Field
-                            fullWidth
-                            name='ProductName2'
-                            variant='outlined'
-                            component={StyledTextField}
-                            label='الویت دوم'
-                          />
-                        </div>
-                      </div>
-                      <div className='row-input my-3'>
-                        <div className='input w-30'>
-                          <Field
-                            fullWidth
-                            name='ProductName3'
-                            variant='outlined'
-                            component={StyledTextField}
-                            label='الویت سوم'
-                          />
-                        </div>
-                        <div className='input mr w-30'>
-                          <Field
-                            fullWidth
-                            name='ProductName4'
-                            variant='outlined'
-                            component={StyledTextField}
-                            label='الویت چهارم'
-                          />
-                        </div>
-                      </div>
-                      <div className='row-input'>
-                        <div className='input w-30'>
-                          <Field
-                            fullWidth
-                            name='ProductName5'
-                            variant='outlined'
-                            component={StyledTextField}
-                            label='الویت پنجم'
-                          />
-                        </div>
-                        <div className='input mr w-30'>
-                          <Field
-                            fullWidth
-                            name='ProductName6'
-                            variant='outlined'
-                            component={StyledTextField}
-                            label='الویت ششم'
-                          />
-                        </div>
-                      </div>
-                      <div className='text-center-align flex-between mt-3 flex-wrap'>
-                        <div className='input w-30'>
-                          <Field
-                            fullWidth
-                            name='ProductName7'
-                            variant='outlined'
-                            component={StyledTextField}
-                            label='الویت هفتم'
-                          />
-                        </div>
-                        <div className='input mr w-30'>
-                          <Field
-                            fullWidth
-                            name='ProductName8'
-                            variant='outlined'
-                            component={StyledTextField}
-                            label='الویت هشتم'
-                          />
-                        </div>
-                        <div className='input mr w-30'>
-                          <Field
-                            fullWidth
-                            name='ProductName9'
-                            variant='outlined'
-                            component={StyledTextField}
-                            label='الویت نهم'
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </FormikStep>
-
-                <FormikStep label='photos' validationSchema={formValidateFile}>
-                  <div className='title-right-side'>
-                    <span>مرحله 4 از 4</span>
-                    <span className='title'>اطلاعات</span>
-                  </div>
-                  <div className='file-parent flex'>
-                    {/* <Field
+              <FormikStep label='photos' validationSchema={formValidateFile}>
+                <div className='title-right-side'>
+                  <span>مرحله 4 از 4</span>
+                  <span className='title'>اطلاعات</span>
+                </div>
+                <div className='file-parent flex'>
+                  {/* <Field
                   type="file"
                   name="NationalCardPicture"
                   accept="image/*"
                 /> */}
-                    <div className='fileLabel'>انتخاب تصویر شناسنامه</div>
-                    <FileUpload name='NationalCardPicture' fileRef={fileRef} />
-                  </div>
-                  <div className='file-parent flex'>
-                    {/* <Field
+                  <div className='fileLabel'>انتخاب تصویر شناسنامه</div>
+                  <FileUpload name='NationalCardPicture' fileRef={fileRef} />
+                </div>
+                <div className='file-parent flex'>
+                  {/* <Field
                   type="file"
                   name="NationalCardPicture"
                   accept="image/*"
                 /> */}
-                    <div className='fileLabel'>انتخاب تصویر شناسنامه</div>
-                    <FileUpload
-                      name='BirthCertificatePicture'
-                      fileRef={fileRef}
-                    />
-                  </div>
-                </FormikStep>
-              </FormikStepper>
-            </>
+                  <div className='fileLabel'>انتخاب تصویر شناسنامه</div>
+                  <FileUpload
+                    name='BirthCertificatePicture'
+                    fileRef={fileRef}
+                  />
+                </div>
+              </FormikStep>
+            </FormikStepper>
           ) : (
             <div className='form-done'>
               <svg

@@ -57,7 +57,7 @@ body {
 
 .container-form {
   display: flex;
-  align-items: center;
+  align-items: start;
   height: 100%;
 }
 .container-form .form-left-side {
@@ -198,6 +198,9 @@ input[type="radio"] {
 }
 .mt-3 {
   margin-top: 2rem;
+}
+.my-2 {
+  margin: 1.5rem 0;
 }
 .my-3 {
   margin: 2rem 0;
