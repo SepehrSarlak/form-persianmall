@@ -125,8 +125,9 @@ export default function Home() {
         /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
       ),
     BankName: string().required("نام بانک را به درستی وارد کنید"),
-    Sheba: string().required("شماره شبا را به درستی وارد کنید"),
-    // .matches(/^(?=.{24}$)[0-9]*$/, "شماره شبا را به درستی وارد کنید"),
+    Sheba: string()
+      .required("شماره شبا را به درستی وارد کنید")
+      .matches(/^(?=.{24}$)[0-9]*$/, "شماره شبا را به درستی وارد کنید"),
   });
   const validationSchemaSecondStep = object({
     TelegramPhoneNumber: string()
@@ -286,7 +287,7 @@ export default function Home() {
               >
                 <FormikStep
                   label='Personal Data'
-                  // validationSchema={validationSchema}
+                  validationSchema={validationSchema}
                 >
                   <div className='title-right-side'>
                     <span>مرحله 1 از 3</span>
@@ -400,7 +401,7 @@ export default function Home() {
                 </FormikStep>
                 <FormikStep
                   label='Bank Accounts'
-                  // validationSchema={validationSchemaSecondStep}
+                  validationSchema={validationSchemaSecondStep}
                 >
                   <div className='title-right-side'>
                     <span>مرحله 2 از 3</span>
