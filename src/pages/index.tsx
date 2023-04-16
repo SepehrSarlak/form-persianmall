@@ -320,6 +320,7 @@ export default function Home() {
                         name='PhoneNumber'
                         variant='outlined'
                         component={StyledTextField}
+                        type='number'
                         label='شماره موبایل'
                         className='input-left'
                       />
@@ -329,6 +330,7 @@ export default function Home() {
                         fullWidth
                         name='NationalCode'
                         variant='outlined'
+                        type='number'
                         component={StyledTextField}
                         label='کد ملی'
                         className='input-left'
@@ -341,6 +343,7 @@ export default function Home() {
                         fullWidth
                         name='PostalCode'
                         variant='outlined'
+                        type='number'
                         component={StyledTextField}
                         label='کد پستی'
                         className='input-left'
@@ -382,6 +385,7 @@ export default function Home() {
                     <div className='row-input'>
                       <div className='input'>
                         <Field
+                          type='number'
                           label='شماره شبا بانکی'
                           className='input-left'
                           helperText='حساب باید به نام طرف قرارداد باشد'
@@ -401,7 +405,7 @@ export default function Home() {
                 </FormikStep>
                 <FormikStep
                   label='Bank Accounts'
-                  validationSchema={validationSchemaSecondStep}
+                  // validationSchema={validationSchemaSecondStep}
                 >
                   <div className='title-right-side'>
                     <span>مرحله 2 از 3</span>
@@ -413,6 +417,7 @@ export default function Home() {
                         fullWidth
                         name='TelegramPhoneNumber'
                         variant='outlined'
+                        type='number'
                         component={StyledTextField}
                         label='شماره ی تلگرام فروشنده *'
                       />
@@ -507,6 +512,7 @@ export default function Home() {
                           fullWidth
                           name='ParticipantPhoneNumber1'
                           variant='outlined'
+                          type='number'
                           component={StyledTextField}
                           label='شماره موبایل'
                         />
@@ -526,6 +532,7 @@ export default function Home() {
                         <Field
                           fullWidth
                           name='ParticipantPhoneNumber2'
+                          type='number'
                           variant='outlined'
                           component={StyledTextField}
                           label='شماره موبایل'
@@ -536,7 +543,7 @@ export default function Home() {
                 </FormikStep>
                 <FormikStep
                   label='Bank Accounts'
-                  validationSchema={validationSchemaThirdStep}
+                  // validationSchema={validationSchemaThirdStep}
                 >
                   <div className='title-right-side'>
                     <span>مرحله 3 از 4</span>
