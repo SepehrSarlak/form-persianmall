@@ -369,6 +369,7 @@ export default function Home() {
               <div className="row-input">
                 <div className="input">
                   <Field
+                    type="number"
                     fullWidth
                     name="PhoneNumber"
                     variant="outlined"
